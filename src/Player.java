@@ -20,8 +20,29 @@ public class Player {
     //get Player
     public int getPlayer() {
         return this.nextPlayer;
+        
     }
-       
+    //add FreeTurn
+    public void addFreeTurn(){
+        this.freeTurns++;
+    }
+    
+    //subtract FreeTurn
+    public void subtractFreeTurn(){
+        this.freeTurns--;
+    }
+    
+    //add FreeTurn
+    public int getFreeTurn(){
+        return this.freeTurns
+    }
+    
+    //choose category
+    public void chooseCategory(){
+        System.out.println("Choose category");
+        return null;
+    }
+    
     //set Score
     public void setScore(int newScore){
         this.score = score;
