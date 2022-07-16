@@ -18,6 +18,14 @@ public class Wheel {
             wheelSec1[6+i]=new Sector(catagories[i], 6+i);
         }
 
+/* ADD THESE**     b.	“Lose Turn” sector
+c.	“Free Turn” sector
+d.	“Bankrupt” sector
+e.	“Player’s Choice” sector
+f.	“Opponent’s Choice” sector
+g.	“Spin Again” sector
+ */
+
     }
 
     public Sector getCat(int ID) {
@@ -31,7 +39,7 @@ public class Wheel {
         Random rand = new Random();
   
         // Generate random integers in range 0 to 12
-        int rand_int1 = rand.nextInt(13);
+        int rand_int1 = rand.nextInt(12);
         System.out.println(this.wheelSec1[rand_int1].dispSec());
         System.out.println(this.wheelSec1[rand_int1].getSecID());
         spinCounter--;
@@ -46,7 +54,7 @@ public class Wheel {
     public static void main(String[] args) {
         String[] cats = {"cat1", "cat2", "cat3", "cat4", "cat5", "cat6"};
         Wheel wheel1=new Wheel(cats);
-        System.out.println(wheel1.spinWheel());
+        wheel1.spinWheel();
     }
 
 }
