@@ -4,7 +4,7 @@ public class Player {
     private int score;
     private String name;
     private int freeTurns;
-    public nextPlayer;
+    public Player nextPlayer;
     
     public Player(String name) {
         this.score = 0;

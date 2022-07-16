@@ -6,12 +6,19 @@ public class Wheel {
     public Wheel() {
         this.spinCounter = 50;
     }
+    
+    public boolean spinsRemaining()
+    {
+       return true;
+    }
 
-    public Sector spinWheel(Player p) {
+    public String spinWheel(Player p) {
         
         //do stuff
 
-        spinCounter--;
+        this.spinCounter--;
+        
+        return "";
 
     }
 
