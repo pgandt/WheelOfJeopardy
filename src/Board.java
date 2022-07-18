@@ -8,9 +8,11 @@ public class Board {
 
     }
 
-    public int askQuestion(Sector category)
+    public int askQuestion(String category)
     {
         //ask the next question from the current sector
+       
+       return 1;
 
         //return 1 if the question is right, return 0 if wrong, return -1 if no questions left
     }

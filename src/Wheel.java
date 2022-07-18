@@ -12,6 +12,12 @@ public class Wheel {
         this.spinCounter = 50;
         secs=Sectors.values();
     }
+    
+    public boolean spinsRemaining()
+    {
+       return true;
+    }
+
 
     public enum Sectors {
         CAT1 ("cat1Label", 0),
@@ -58,6 +64,7 @@ public class Wheel {
         int rand_int1 = rand.nextInt(17);
         //System.out.println(this.secs[rand_int1].getCat(rand_int1));
         spinCounter--;
+
 
         return this.secs[rand_int1].getCat(rand_int1);
     }
