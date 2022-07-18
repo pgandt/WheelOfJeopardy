@@ -44,6 +44,7 @@ public class Board {
         }
     }
 
+
     public int askQuestion(Sector category) {
         Category c = categories.get(0);
         
@@ -57,6 +58,7 @@ public class Board {
         System.out.println("\t 1.) " + q.getCorrectAnswer());
         System.out.println("\t 2.) " + q.getWrongAnswer1());
         System.out.println("\t 3.) " + q.getWrongAnswer2());
+
 
         int response = input.nextInt();
         if(response == 1) {
