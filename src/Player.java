@@ -14,12 +14,12 @@ public class Player {
     }
     
     //set Player
-    public void setPlayer(int newPlayer){
-        this.nextPlayer = nextPlayer;
+    public void setPlayer(Player newPlayer){
+        this.nextPlayer = newPlayer;
     }
     
     //get Player
-    public int getPlayer() {
+    public Player getPlayer() {
         return this.nextPlayer;
         
     }
@@ -32,25 +32,32 @@ public class Player {
     public void subtractFreeTurn(){
         this.freeTurns--;
     }
+
+    public int getFreeTurns() {
+        return this.freeTurns;
+    }
     
     //add FreeTurn
     public int getFreeTurn(){
-        return this.freeTurns
+        return this.freeTurns;
     }
     
     //choose category
     public void chooseCategory(){
         System.out.println("Choose category");
-        return null;
     }
     
     //set Score
     public void setScore(int newScore){
-        this.score = score;
+        this.score = newScore;
     }
     //get Score
     public int getScore() {
         return this.score;
+    }
+
+    public String getName() {
+        return this.name;
     }
 
 }

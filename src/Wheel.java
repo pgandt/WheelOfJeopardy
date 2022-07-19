@@ -1,16 +1,23 @@
-package WheelOfJeopardy.src;
+//package WheelOfJeopardy.src;
 
 import java.util.Random;
 
 public class Wheel {
 
     private int spinCounter;
-    public Sectors[] secs;
+    public Sector[] sectors = {Sector.CATEGORY1, Sector.CATEGORY1,
+                               Sector.CATEGORY2, Sector.CATEGORY2,
+                               Sector.CATEGORY3, Sector.CATEGORY3,
+                               Sector.CATEGORY4, Sector.CATEGORY4,
+                               Sector.CATEGORY5, Sector.CATEGORY5,
+                               Sector.CATEGORY6, Sector.CATEGORY6,
+                               Sector.FREE_TURN, Sector.LOSE_TURN,
+                               Sector.SPIN_AGAIN, Sector.BANKRUPT,
+                               Sector.PLAYER_CHOICE, Sector.OPPONENT_CHOICE};
     //hold all of the sectors in a data structure: will be in an array of enum Sectors
 
     public Wheel() {
         this.spinCounter = 50;
-        secs=Sectors.values();
     }
     
     public boolean spinsRemaining()
@@ -19,7 +26,7 @@ public class Wheel {
     }
 
 
-    public enum Sectors {
+    /*public enum Sectors {
         CAT1 ("cat1Label", 0),
         CAT2 ("cat2Label", 1),
         CAT3 ("cat3Label", 2),
@@ -53,9 +60,9 @@ public class Wheel {
             }
             return "Not a Match";
         }
-    }
+    }*/
 
-    public String spinWheel() { //public Sector spinWheel(Player p)
+    public Sector spinWheel() { //public Sector spinWheel(Player p)
         
         // Create instance of Random class
         Random rand = new Random();
@@ -66,19 +73,19 @@ public class Wheel {
         spinCounter--;
 
 
-        return this.secs[rand_int1].getCat(rand_int1);
+        return this.sectors[rand_int1];
     }
 
     public int getSpinCounter() {
         return spinCounter;
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Wheel wheel1=new Wheel();
         for (int i=0; i<18;i++) {
             System.out.println(wheel1.spinWheel());
         }
         System.out.println(wheel1.getSpinCounter());
-    }
+    }*/
 
 }

@@ -3,43 +3,43 @@
         "categories": [
             {
                 "category": 1,
-                "name": "test",
+                "name": "Looking Up",
                 "questions":
                 [
                     {
                         "points": 100,
-                        "Question": "What color is the sky",
+                        "Question": "What color is the sky?",
                         "correctAnswer": "blue",
                         "wrongAnswer1": "red",
                         "wrongAnswer2": "purple"
                     },
                     {
                         "points": 200,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "What is the 4th planet from the Sun?",
+                        "correctAnswer": "Mars",
+                        "wrongAnswer1": "Earth",
+                        "wrongAnswer2": "Jupiter"
                     },
                     {
                         "points": 300,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "What is a type of precipitation?",
+                        "correctAnswer": "Rain",
+                        "wrongAnswer1": "Thunder",
+                        "wrongAnswer2": "Lightning"
                     },
                     {
                         "points": 400,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "How long does it take Earth to orbit the Sun?",
+                        "correctAnswer": "1 year",
+                        "wrongAnswer1": "1 day",
+                        "wrongAnswer2": "1 month"
                     },
                     {
                         "points": 500,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "How far from Earth is the Sun?",
+                        "correctAnswer": "1 Astronomical Unit",
+                        "wrongAnswer1": "1,000,000 kilometers",
+                        "wrongAnswer2": "1 Light Year"
                     }
                 ]
             },

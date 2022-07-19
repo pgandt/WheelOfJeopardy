@@ -1,9 +1,11 @@
+import java.io.IOException;
 import java.util.Scanner;
+import org.json.simple.parser.ParseException;
 
 public class WheelOfJeopardy
 {
 
-   public static void main(String args[])
+   public static void main(String args[]) throws IOException, ParseException
    {
 
       String player1Name = "";
@@ -22,7 +24,7 @@ public class WheelOfJeopardy
       // accept player 2's name
       player2Name = ( inputReader.nextLine() );
 
-      Game game = new Game(player1Name , player2Name);
+      Game game = new Game(player1Name , player2Name, inputReader);
    }
 
 }
