@@ -25,11 +25,13 @@ public class Player {
     }
     //add FreeTurn
     public void addFreeTurn(){
+        System.out.println("Player added a free turn token.");
         this.freeTurns++;
     }
     
     //subtract FreeTurn
     public void subtractFreeTurn(){
+        System.out.println("Player used a free turn");
         this.freeTurns--;
     }
 
@@ -49,6 +51,7 @@ public class Player {
     
     //set Score
     public void setScore(int newScore){
+        System.out.println("Player's score is now" + newScore);
         this.score = newScore;
     }
     //get Score

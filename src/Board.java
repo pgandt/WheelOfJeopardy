@@ -47,6 +47,7 @@ public class Board {
 
     public int askQuestion(Sector category) {
         Category c = null;
+        System.out.println("Board is asking a question.");
 
         switch (category) {
 

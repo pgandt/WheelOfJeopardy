@@ -69,6 +69,9 @@ public class Game
          
       }
 
+      System.out.println("Player " + p.getName() + " your turn!");
+      System.out.println("Press enter to spin the wheel!");
+      inputReader.nextLine();
 
       // prompt the user within this function to spin the wheel
       Sector sector = wheel.spinWheel();
@@ -76,16 +79,19 @@ public class Game
       switch (sector)
       {
       case LOSE_TURN :
+         System.out.println("You lose this turn!");
          // print lose turn here or in spin wheel? Probably in spin wheel
          break;
 
       case FREE_TURN :
-         // p.addFreeTurn
+         p.addFreeTurn();
+         System.out.println("You get a free turn token!");
          this.takeTurn(p);
          break;
 
       case BANKRUPT :
 
+         System.out.println("You've gone bankrupt!");
          if (p.getScore() > 0)
          {
             // bankrupt player by setting score to 0
@@ -94,19 +100,21 @@ public class Game
          break;
 
       case PLAYER_CHOICE :
-
+         System.out.println("Player's choice");
          // chosenCategory = p.chooseCategory
          //this.board.askQuestion(chosenCategory);
          break;
 
       case OPPONENT_CHOICE :
 
+         System.out.println("Opponent's choice");
          // chosenCategory = p.nextPlayer.chooseCategory
          //this.board.askQuestion(chosenCategory);
          break;
 
       case SPIN_AGAIN :
          
+         System.out.println("Spin again!");
          this.takeTurn(p);
          break;
 
