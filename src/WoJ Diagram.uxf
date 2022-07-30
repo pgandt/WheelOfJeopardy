@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>9</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>243</x>
+      <y>720</y>
+      <w>234</w>
+      <h>198</h>
+    </coordinates>
+    <panel_attributes>Question
+--
+-points: int
+-question: String
+-correctAnswer: String
+-wrongAnswer1: String
+-wrongAnswer2: String
+--
++Question(obj: JSONObject)
++getPoints(): int
++getQuestion(): String
++getCorrectAnswer(): String
++getWrongAnswer1(): String
++getWrongAnswer2(): String
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>882</x>
+      <y>549</y>
+      <w>162</w>
+      <h>225</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+Sector
+--
+CATEGORY1
+CATEGORY2
+CATEGORY3
+CATEGORY4
+CATEGORY5
+CATEGORY6
+FREE_TURN
+LOSE_TURN
+SPIN_AGAIN
+BANKRUPT
+PLAYER_CHOICE
+OPPONENT_CHOICE</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>243</x>
+      <y>333</y>
+      <w>234</w>
+      <h>99</h>
+    </coordinates>
+    <panel_attributes>Board
+--
+-scannerInput: Scanner
+-categories: ArrayList&lt;Category&gt;
+--
++Board(scannerInput: Scanner)
++askQuestion(category: Sector): int
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>243</x>
+      <y>513</y>
+      <w>234</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>Category
+--
+-questions: LinkedList&lt;Question&gt;
+-name: String
+-categoryNum: int
+--
++Category(obj: JSONObject)
++questionsLeft(): boolean
++getCategoryName(): String
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>450</x>
+      <y>54</y>
+      <w>441</w>
+      <h>162</h>
+    </coordinates>
+    <panel_attributes>Game
+--
+-wheel: Wheel
+-board: Board
+-player1: Player
+-player2: Player
+-inputReader: Scanner
+-round: int
+--
++Game(player1Name: String, player2Name: String, inputReader: Scanner)
++takeTurn(player: Player): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>558</x>
+      <y>333</y>
+      <w>234</w>
+      <h>243</h>
+    </coordinates>
+    <panel_attributes>Player
+--
+-score: int
+-name: String
+-freeTurns: int
+-nextPlayer: Player
+--
++Player(name: String)
++setPlayer(newPlayer: Player): void
++getPlayer(): Player
++addFreeTurn(): void
++subtractFreeTurn(): void
++getFreeTurns(): int
++chooseCategory(): void
++setScore(newScore: int): void
++getScore() int
++getName(): String
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>846</x>
+      <y>333</y>
+      <w>234</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>Wheel
+--
+-spinCounter: int
+-sectors: Sector
+--
++Wheel()
++spinsRemaining(): boolean
++spinWheel(): Sector
++getSpinCounter(): int
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>342</x>
+      <y>207</y>
+      <w>360</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>370.0;10.0;370.0;80.0;10.0;80.0;10.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>342</x>
+      <y>423</y>
+      <w>36</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1=1
+m2=6</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>342</x>
+      <y>630</y>
+      <w>45</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1=1
+m2=0..5</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>666</x>
+      <y>270</y>
+      <w>324</w>
+      <h>81</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+</panel_attributes>
+    <additional_attributes>330.0;70.0;330.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>666</x>
+      <y>270</y>
+      <w>36</w>
+      <h>81</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m2=2</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>954</x>
+      <y>459</y>
+      <w>36</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=18</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+</diagram>
