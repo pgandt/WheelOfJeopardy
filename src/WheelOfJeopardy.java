@@ -25,6 +25,7 @@ public class WheelOfJeopardy
       player2Name = ( inputReader.nextLine() );
 
       Game game = new Game(player1Name , player2Name, inputReader);
+
    }
 
 }

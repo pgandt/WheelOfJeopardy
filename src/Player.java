@@ -1,3 +1,4 @@
+import java.util.Scanner;
 
 public class Player {
 
@@ -5,12 +6,14 @@ public class Player {
     private String name;
     private int freeTurns;
     public Player nextPlayer;
+    Scanner input;
 
     
-    public Player(String name) {
+    public Player(String name, Scanner input) {
         this.score = 0;
         this.name = name;
         this.freeTurns = 0;
+        this.input = input;
     }
     
     //set Player
@@ -45,8 +48,52 @@ public class Player {
     }
     
     //choose category
-    public void chooseCategory(){
-        System.out.println("Choose category");
+    public Sector chooseCategory(){
+        System.out.println(this.name + "please select the category:");
+        int choice = 0;
+        Sector c = null;
+        while (choice >= 1 && choice <=6)
+        {
+            choice = this.input.nextInt();
+            switch (choice)
+            {
+                case 1:
+                {
+                    c = Sector.CATEGORY1;
+                    break;
+                }
+                case 2:
+                {
+                    c = Sector.CATEGORY2;
+                    break;
+                }
+                case 3:
+                {
+                    c = Sector.CATEGORY3;
+                    break;
+                }
+                case 4:
+                {
+                    c = Sector.CATEGORY4;
+                    break;
+                }
+                case 5:
+                {
+                    c = Sector.CATEGORY5;
+                    break;
+                }
+                case 6:
+                {
+                    c = Sector.CATEGORY6;
+                    break;
+                }
+                default:
+                {
+                    System.out.println("You chose an invalid category, please choose a valid category:");
+                }
+            }
+        }
+        return c;
     }
     
     //set Score

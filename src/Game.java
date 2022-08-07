@@ -2,22 +2,70 @@ import java.io.IOException;
 import java.util.Scanner;
 import org.json.simple.parser.ParseException;
 
+//javafx imports
+import javafx.application.*;
+import javafx.geometry.HPos;
+import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
+import javafx.scene.*;
+import javafx.stage.*;
+import javafx.scene.layout.*;
+import javafx.scene.control.*;
+import javafx.event.*;
+
 /**
  * The game class directs the execution of the entire game.
  * 
  * @author shaun
  *
  */
-public class Game
-{
+public class Game extends Application {
 
    private Wheel wheel;
    private Board board;
    private Player player1;
    private Player player2;
    private Scanner inputReader;
+   
+   //GUI using JavaFX
+   Label roundCounter = new Label("Round");
+   //labels to add: spins remaining, player scores, current player, free tokens
+
+   //button to spin wheel
+
+   //table for board
+
+   //figure out a pop up for questions
 
    int round = 1;
+
+   public static void main(String args[]) throws IOException, ParseException
+   {
+
+      String player1Name = "";
+      String player2Name = "";
+
+      System.out.println("Enter Player 1's Name:");
+
+      // create a new scanner
+      Scanner inputReader = new Scanner(System.in);
+
+      // accept player 1's name
+      player1Name = ( inputReader.nextLine() );
+
+      System.out.println("Enter Player 2's Name:");
+
+      // accept player 2's name
+      player2Name = ( inputReader.nextLine() );
+
+      //launch(args);
+
+      //Game game = new Game(player1Name , player2Name, inputReader);
+
+      launch(args);
+
+   }
+
 
    /**
     * Initializes and starts the WoJ game
@@ -27,19 +75,35 @@ public class Game
     */
    public Game(String player1Name , String player2Name, Scanner inputReader) throws IOException, ParseException
    {
+      //pass reference to the board, player and wheel
       this.inputReader = inputReader;
       this.wheel = new Wheel();
       this.board = new Board(inputReader);
-      this.player1 = new Player(player1Name);
-      this.player2 = new Player(player2Name);
+      this.player1 = new Player(player1Name, inputReader);
+      this.player2 = new Player(player2Name, inputReader);
 
       this.player1.nextPlayer = this.player2;
       this.player2.nextPlayer = this.player1;
 
-      // initialize GUI
+      takeTurn(this.player1);
 
-      this.takeTurn(this.player1);
+   }
 
+   public Game() {
+
+   }
+
+   public void start(Stage myStage) {
+      myStage.setTitle("Wheel of Jeopardy");
+      GridPane rootNode = new GridPane();
+      Scene myScene = new Scene(rootNode, 400, 300);
+      
+      //set 
+      rootNode.add(roundCounter, 0, 0);
+      roundCounter.setText("Round " + Integer.toString(round));
+
+      myStage.setScene(myScene);
+      myStage.show();
    }
 
    /**
@@ -75,6 +139,7 @@ public class Game
 
       // prompt the user within this function to spin the wheel
       Sector sector = wheel.spinWheel();
+      Sector chosenCategory; //initialize in case it is player or opponent's choice
 
       switch (sector)
       {
@@ -101,15 +166,15 @@ public class Game
 
       case PLAYER_CHOICE :
          System.out.println("Player's choice");
-         // chosenCategory = p.chooseCategory
-         //this.board.askQuestion(chosenCategory);
+         chosenCategory = p.chooseCategory();
+         this.board.askQuestion(chosenCategory);
          break;
 
       case OPPONENT_CHOICE :
 
          System.out.println("Opponent's choice");
-         // chosenCategory = p.nextPlayer.chooseCategory
-         //this.board.askQuestion(chosenCategory);
+         chosenCategory = p.nextPlayer.chooseCategory();
+         this.board.askQuestion(chosenCategory);
          break;
 
       case SPIN_AGAIN :

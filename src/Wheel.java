@@ -25,43 +25,6 @@ public class Wheel {
        return true;
     }
 
-
-    /*public enum Sectors {
-        CAT1 ("cat1Label", 0),
-        CAT2 ("cat2Label", 1),
-        CAT3 ("cat3Label", 2),
-        CAT4 ("cat4Label", 3),
-        CAT5 ("cat5Label", 4),
-        CAT6 ("cat6Label", 5),
-        CAT7 ("cat7Label", 6),
-        CAT8 ("cat8Label", 7),
-        CAT9 ("cat9Label", 8),
-        CAT10 ("cat10Label", 9),
-        CAT11 ("cat11Label", 10),
-        CAT12 ("cat12Label", 11),
-        CAT13 ("Spin Again", 12),
-        CAT14 ("Opponent’s Choice", 13),
-        CAT15 ("Player’s Choice", 14),
-        CAT16 ("Bankrupt", 15),
-        CAT17 ("Free Turn", 16),
-        CAT18 ("Lose Turn", 17);
-
-        private final String label;
-        private final int index;
-
-        Sectors(String label, int index) {
-            this.label=label;
-            this.index=index;
-        }
-
-        String getCat(int ind) {
-            for(Sectors cat: Sectors.values()) {
-                if(cat.index==ind) return cat.values()[ind].label;
-            }
-            return "Not a Match";
-        }
-    }*/
-
     public Sector spinWheel() { //public Sector spinWheel(Player p)
         
         // Create instance of Random class
