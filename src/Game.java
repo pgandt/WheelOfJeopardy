@@ -1,4 +1,17 @@
+import java.io.IOException;
 import java.util.Scanner;
+import org.json.simple.parser.ParseException;
+
+//javafx imports
+import javafx.application.*;
+import javafx.geometry.HPos;
+import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
+import javafx.scene.*;
+import javafx.stage.*;
+import javafx.scene.layout.*;
+import javafx.scene.control.*;
+import javafx.event.*;
 
 /**
  * The game class directs the execution of the entire game.
@@ -6,15 +19,53 @@ import java.util.Scanner;
  * @author shaun
  *
  */
-public class Game
-{
+public class Game extends Application {
 
    private Wheel wheel;
    private Board board;
    private Player player1;
    private Player player2;
+   private Scanner inputReader;
+   
+   //GUI using JavaFX
+   Label roundCounter = new Label("Round");
+   //labels to add: spins remaining, player scores, current player, free tokens
+
+   //button to spin wheel
+
+   //table for board
+
+   //figure out a pop up for questions
 
    int round = 1;
+
+   public static void main(String args[]) throws IOException, ParseException
+   {
+
+      String player1Name = "";
+      String player2Name = "";
+
+      System.out.println("Enter Player 1's Name:");
+
+      // create a new scanner
+      Scanner inputReader = new Scanner(System.in);
+
+      // accept player 1's name
+      player1Name = ( inputReader.nextLine() );
+
+      System.out.println("Enter Player 2's Name:");
+
+      // accept player 2's name
+      player2Name = ( inputReader.nextLine() );
+
+      //launch(args);
+
+      //Game game = new Game(player1Name , player2Name, inputReader);
+
+      launch(args);
+
+   }
+
 
    /**
     * Initializes and starts the WoJ game
@@ -22,20 +73,37 @@ public class Game
     * @param player1Name - String representing player 1's name
     * @param player2Name - String representing player 2's name
     */
-   public Game(String player1Name , String player2Name)
+   public Game(String player1Name , String player2Name, Scanner inputReader) throws IOException, ParseException
    {
+      //pass reference to the board, player and wheel
+      this.inputReader = inputReader;
       this.wheel = new Wheel();
-      this.board = new Board();
-      this.player1 = new Player(player1Name);
-      this.player2 = new Player(player2Name);
+      this.board = new Board(inputReader);
+      this.player1 = new Player(player1Name, inputReader);
+      this.player2 = new Player(player2Name, inputReader);
 
       this.player1.nextPlayer = this.player2;
       this.player2.nextPlayer = this.player1;
 
-      // initialize GUI
+      takeTurn(this.player1);
 
-      this.takeTurn(this.player1);
+   }
 
+   public Game() {
+
+   }
+
+   public void start(Stage myStage) {
+      myStage.setTitle("Wheel of Jeopardy");
+      GridPane rootNode = new GridPane();
+      Scene myScene = new Scene(rootNode, 400, 300);
+      
+      //set 
+      rootNode.add(roundCounter, 0, 0);
+      roundCounter.setText("Round " + Integer.toString(round));
+
+      myStage.setScene(myScene);
+      myStage.show();
    }
 
    /**
@@ -46,9 +114,6 @@ public class Game
     */
    public void takeTurn(Player p)
    {
-
-      String sector = "";
-      String chosenCategory = "";
       
       if (!this.wheel.spinsRemaining() && this.round == 1)
       { // if no spins remaining and we're in round 1
@@ -68,23 +133,30 @@ public class Game
          
       }
 
+      System.out.println("Player " + p.getName() + " your turn!");
+      System.out.println("Press enter to spin the wheel!");
+      inputReader.nextLine();
 
       // prompt the user within this function to spin the wheel
-      sector = wheel.spinWheel(p);
+      Sector sector = wheel.spinWheel();
+      Sector chosenCategory; //initialize in case it is player or opponent's choice
 
       switch (sector)
       {
-      case "Lose Turn" :
+      case LOSE_TURN :
+         System.out.println("You lose this turn!");
          // print lose turn here or in spin wheel? Probably in spin wheel
          break;
 
-      case "Free Turn" :
-         // p.addFreeTurn
+      case FREE_TURN :
+         p.addFreeTurn();
+         System.out.println("You get a free turn token!");
          this.takeTurn(p);
          break;
 
-      case "Bankrupt" :
+      case BANKRUPT :
 
+         System.out.println("You've gone bankrupt!");
          if (p.getScore() > 0)
          {
             // bankrupt player by setting score to 0
@@ -92,62 +164,42 @@ public class Game
          }
          break;
 
-      case "Player's Choice" :
-
-         // chosenCategory = p.chooseCategory
+      case PLAYER_CHOICE :
+         System.out.println("Player's choice");
+         chosenCategory = p.chooseCategory();
          this.board.askQuestion(chosenCategory);
          break;
 
-      case "Opponent's Choice" :
+      case OPPONENT_CHOICE :
 
-         // chosenCategory = p.nextPlayer.chooseCategory
+         System.out.println("Opponent's choice");
+         chosenCategory = p.nextPlayer.chooseCategory();
          this.board.askQuestion(chosenCategory);
          break;
 
-      case "Spin Again" :
+      case SPIN_AGAIN :
          
+         System.out.println("Spin again!");
          this.takeTurn(p);
          break;
 
          // all remaining sectors
       default :
-         
-         int questionPointValue = this.board.getPoints(sector);
 
          // sector will be the category name
-         switch(this.board.askQuestion(sector))
-         {
-         // no questions remain in the category
-         case -1:
-            // do nothing
-            
-            System.out.println("No questions are remaining for this category");
-            
-         // question was answered wrong
-         case 0:
-            
-            if(p.getFreeTurns > 0)
-            {
-               System.out.println("Question was answered incorrectly, would you like to use a free turn?");
-               
-               if(answer == yes)
-               { // player uses token
-                  
-                  this.takeTurn(p);
-               }
-            
-            }
-            
-            p.subtractScore(questionPointValue)
+         int netScore = this.board.askQuestion(sector);
 
-         // question was answered correctly
-         case 1:
-            p.addScore(questionPointValue)
-            
+         if(netScore == 0) {
+            System.out.println("Category had no questions left, skipping turn.");
+         }
+         else {
+            //check if the score is negative and, if it is, prompt the user to get a 
+            p.setScore(p.getScore() + netScore);
          }
 
       }
       
+      System.out.println("Turn is over, moving to next player's turn.");
       takeTurn(p.nextPlayer);
 
 

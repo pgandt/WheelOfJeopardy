@@ -3,197 +3,197 @@
         "categories": [
             {
                 "category": 1,
-                "name": "test",
+                "name": "Looking Up",
                 "questions":
                 [
                     {
                         "points": 100,
-                        "Question": "What color is the sky",
+                        "Question": "What color is the sky?",
                         "correctAnswer": "blue",
                         "wrongAnswer1": "red",
                         "wrongAnswer2": "purple"
                     },
                     {
                         "points": 200,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "What is the 4th planet from the Sun?",
+                        "correctAnswer": "Mars",
+                        "wrongAnswer1": "Earth",
+                        "wrongAnswer2": "Jupiter"
                     },
                     {
                         "points": 300,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "What is a type of precipitation?",
+                        "correctAnswer": "Rain",
+                        "wrongAnswer1": "Thunder",
+                        "wrongAnswer2": "Lightning"
                     },
                     {
                         "points": 400,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "How long does it take Earth to orbit the Sun?",
+                        "correctAnswer": "1 year",
+                        "wrongAnswer1": "1 day",
+                        "wrongAnswer2": "1 month"
                     },
                     {
                         "points": 500,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "How far from Earth is the Sun?",
+                        "correctAnswer": "1 Astronomical Unit",
+                        "wrongAnswer1": "1,000,000 kilometers",
+                        "wrongAnswer2": "1 Light Year"
                     }
                 ]
             },
             {
                 "category": 2,
-                "name": "test",
+                "name": "Down Under",
                 "questions":
                 [
                     {
                         "points": 100,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "What large 2 legged animal jumps all over Australia?",
+                        "correctAnswer": "Kangaroo",
+                        "wrongAnswer1": "Wallaby",
+                        "wrongAnswer2": "Koala"
                     },
                     {
                         "points": 200,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "What is the most famous building in Australia?",
+                        "correctAnswer": "Sydney Opera House",
+                        "wrongAnswer1": "Eiffel Tower",
+                        "wrongAnswer2": "Leaning Tower of Pisa"
                     },
                     {
                         "points": 300,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "What is the capital of Australia?",
+                        "correctAnswer": "Canberra",
+                        "wrongAnswer1": "Sydney",
+                        "wrongAnswer2": "Waterloo"
                     },
                     {
                         "points": 400,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "What Australian mammal lays eggs?",
+                        "correctAnswer": "Platypus",
+                        "wrongAnswer1": "Kangaroo",
+                        "wrongAnswer2": "Wallaby"
                     },
                     {
                         "points": 500,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "What Pixar movie involves Australia?",
+                        "correctAnswer": "Finding Nemo",
+                        "wrongAnswer1": "Inside Out",
+                        "wrongAnswer2": "Toy Story"
                     }
                 ]
             },
             {
                 "category": 3,
-                "name": "test",
+                "name": "JHU EP",
                 "questions":
                 [
                     {
                         "points": 100,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "What is the best class at Johns Hopkins University?",
+                        "correctAnswer": "Engineering Professionals Software Engineering",
+                        "wrongAnswer1": "Nothing",
+                        "wrongAnswer2": "Nothing"
                     },
                     {
                         "points": 200,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "What is the best class at Johns Hopkins University?",
+                        "correctAnswer": "Engineering Professionals Software Engineering",
+                        "wrongAnswer1": "Nothing",
+                        "wrongAnswer2": "Nothing"
                     },
                     {
                         "points": 300,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "What is the best class at Johns Hopkins University?",
+                        "correctAnswer": "Engineering Professionals Software Engineering",
+                        "wrongAnswer1": "Nothing",
+                        "wrongAnswer2": "Nothing"
                     },
                     {
                         "points": 400,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "What is the best class at Johns Hopkins University?",
+                        "correctAnswer": "Engineering Professionals Software Engineering",
+                        "wrongAnswer1": "Nothing",
+                        "wrongAnswer2": "Nothing"
                     },
                     {
                         "points": 500,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "What is the best class at Johns Hopkins University?",
+                        "correctAnswer": "Engineering Professionals Software Engineering",
+                        "wrongAnswer1": "Nothing",
+                        "wrongAnswer2": "Nothing"
                     }
                 ]
             },
             {
                 "category": 4,
-                "name": "test",
+                "name": "Out of Time",
                 "questions":
                 [
                     {
                         "points": 100,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "How many seconds are in a minute?",
+                        "correctAnswer": "60",
+                        "wrongAnswer1": "100",
+                        "wrongAnswer2": "10"
                     },
                     {
                         "points": 200,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "How many minutes are in an hour?",
+                        "correctAnswer": "60",
+                        "wrongAnswer1": "100",
+                        "wrongAnswer2": "10"
                     },
                     {
                         "points": 300,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "How many hours are in a day?",
+                        "correctAnswer": "24",
+                        "wrongAnswer1": "30",
+                        "wrongAnswer2": "20"
                     },
                     {
                         "points": 400,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "How many days are in a week?",
+                        "correctAnswer": "7",
+                        "wrongAnswer1": "10",
+                        "wrongAnswer2": "5"
                     },
                     {
                         "points": 500,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "How many weeks are in a year?",
+                        "correctAnswer": "52",
+                        "wrongAnswer1": "100",
+                        "wrongAnswer2": "10"
                     }
                 ]
             },
             {
                 "category": 5,
-                "name": "test",
+                "name": "Movie Time",
                 "questions":
                 [
                     {
                         "points": 100,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "What is the highest grossing movie?",
+                        "correctAnswer": "Avatar",
+                        "wrongAnswer1": "Avenges: Endgame",
+                        "wrongAnswer2": "Titanic"
                     },
                     {
                         "points": 200,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "What Christmas movie stars Bruce Willis?",
+                        "correctAnswer": "Die Hard",
+                        "wrongAnswer1": "Home Alone",
+                        "wrongAnswer2": "Elf"
                     },
                     {
                         "points": 300,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "What movie was based off an SNL sketch?",
+                        "correctAnswer": "Blues Brothers",
+                        "wrongAnswer1": "Truman Show",
+                        "wrongAnswer2": "Animal House"
                     },
                     {
                         "points": 400,
@@ -213,29 +213,29 @@
             },
             {
                 "category": 6,
-                "name": "test",
+                "name": "Programming",
                 "questions":
                 [
                     {
                         "points": 100,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "What language is this written in?",
+                        "correctAnswer": "Java",
+                        "wrongAnswer1": "Python",
+                        "wrongAnswer2": "C++"
                     },
                     {
                         "points": 200,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "What language is Unix written in?",
+                        "correctAnswer": "C",
+                        "wrongAnswer1": "C++",
+                        "wrongAnswer2": "Rust"
                     },
                     {
                         "points": 300,
-                        "Question": "",
-                        "correctAnswer": "",
-                        "wrongAnswer1": "",
-                        "wrongAnswer2": ""
+                        "Question": "What language is very easy to use?",
+                        "correctAnswer": "Python",
+                        "wrongAnswer1": "C",
+                        "wrongAnswer2": "JavaScript"
                     },
                     {
                         "points": 400,

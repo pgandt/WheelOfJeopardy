@@ -46,12 +46,49 @@ public class Board {
 
 
     public int askQuestion(Sector category) {
-        Category c = categories.get(0);
+        Category c = null;
+        System.out.println("Board is asking a question.");
+
+        switch (category) {
+
+            case CATEGORY1:
+            {
+                c = categories.get(0);
+                break;
+            }
+            case CATEGORY2:
+            {
+                c = categories.get(1);
+                break;
+            }
+            case CATEGORY3:
+            {
+                c = categories.get(2);
+                break;
+            }
+            case CATEGORY4:
+            {
+                c = categories.get(3);
+                break;
+            }
+            case CATEGORY5:
+            {
+                c = categories.get(4);
+                break;
+            }
+            case CATEGORY6:
+            {
+                c = categories.get(5);
+            }
+        }
+
         
         if(!c.questionsLeft())
         {
+            System.out.println("No questions left in category \"" + c.getCategoryName() + "\".");
             return 0;
         }
+        System.out.println("Your category is: " + c.getCategoryName());
         Question q = c.questions.pollFirst();
         System.out.println(q.getQuestion() + "\n\n");
         System.out.println("Enter the number of the answer you would like to select:");

@@ -9,6 +9,7 @@ public class Question {
     String wrongAnswer2;
 
     public Question(JSONObject j) {
+        this.q = (String) j.get("Question");
         this.points = Math.toIntExact((long) j.get("points"));
         this.correctAnswer = (String) j.get("correctAnswer");
         this.wrongAnswer1 = (String) j.get("wrongAnswer1");
