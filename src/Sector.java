@@ -10,5 +10,6 @@ public enum Sector{
     PLAYER_CHOICE,
     OPPONENT_CHOICE,
     SPIN_AGAIN,
-    BANKRUPT
+    BANKRUPT,
+    NONE
 }

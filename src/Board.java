@@ -15,8 +15,8 @@ public class Board {
     public static void main(String args[]) throws IOException, ParseException {
         Scanner input = new Scanner(System.in);
         Board b = new Board(input);
-        int v = b.askQuestion(null);
-        System.out.println("Gained " + v + "points.");
+        //int v = b.askQuestion(null);
+        //System.out.println("Gained " + v + "points.");
     }
 
     public ArrayList<Category> categories;
@@ -45,7 +45,7 @@ public class Board {
     }
 
 
-    public int askQuestion(Sector category) {
+    public Question askQuestion(Sector category) {
         Category c = null;
         System.out.println("Board is asking a question.");
 
@@ -86,11 +86,14 @@ public class Board {
         if(!c.questionsLeft())
         {
             System.out.println("No questions left in category \"" + c.getCategoryName() + "\".");
-            return 0;
+            return null;
         }
         System.out.println("Your category is: " + c.getCategoryName());
         Question q = c.questions.pollFirst();
-        System.out.println(q.getQuestion() + "\n\n");
+
+        return q;
+
+        /*System.out.println(q.getQuestion() + "\n\n");
         System.out.println("Enter the number of the answer you would like to select:");
         System.out.println("\t 1.) " + q.getCorrectAnswer());
         System.out.println("\t 2.) " + q.getWrongAnswer1());
@@ -104,6 +107,7 @@ public class Board {
         else {
             return -1 * q.getPoints();
         }
+    */
     }
 
 }

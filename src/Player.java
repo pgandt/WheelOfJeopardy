@@ -52,7 +52,7 @@ public class Player {
         System.out.println(this.name + "please select the category:");
         int choice = 0;
         Sector c = null;
-        while (choice >= 1 && choice <=6)
+        while (choice <= 0 || choice >=7)
         {
             choice = this.input.nextInt();
             switch (choice)
