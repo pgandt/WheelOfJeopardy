@@ -9,11 +9,10 @@ public class Player {
     Scanner input;
 
     
-    public Player(String name, Scanner input) {
+    public Player(String name) {
         this.score = 0;
         this.name = name;
         this.freeTurns = 0;
-        this.input = input;
     }
     
     //set Player

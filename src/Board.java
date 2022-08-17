@@ -6,21 +6,18 @@ import java.nio.file.Path;
 import java.io.IOException;
 import org.json.simple.parser.ParseException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 
 public class Board {
     //store the questions for each category in a linked list
 
     public static void main(String args[]) throws IOException, ParseException {
-        Scanner input = new Scanner(System.in);
-        Board b = new Board(input);
+        Board b = new Board();
         //int v = b.askQuestion(null);
         //System.out.println("Gained " + v + "points.");
     }
 
     public ArrayList<Category> categories;
-    Scanner input;
 
     /**
      * Board constructor. Read the questions.json file to get all of the questions that will
@@ -29,9 +26,8 @@ public class Board {
      * @throws IOException
      * @throws ParseException
      */
-    public Board(Scanner input) throws IOException, ParseException
+    public Board() throws IOException, ParseException
     {
-        this.input = input;
         categories = new ArrayList<Category>();
         JSONParser parser = new JSONParser();
         Path jsonFile = Path.of("questions.json");
