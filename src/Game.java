@@ -2,43 +2,19 @@ import java.io.IOException;
 import java.util.Scanner;
 import org.json.simple.parser.ParseException;
 
-//javafx imports
-import javafx.application.*;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
-import javafx.scene.*;
-import javafx.stage.*;
-import javafx.scene.layout.*;
-import javafx.scene.control.*;
-import javafx.event.*;
-
 /**
  * The game class directs the execution of the entire game.
  * 
  * @author shaun
  *
  */
-public class Game extends Application {
+public class Game {
 
    private Wheel wheel;
    private Board board;
    private Player player1;
    private Player player2;
    private Scanner inputReader;
-   
-   //GUI using JavaFX
-   Label roundCounter = new Label();
-   Label spins = new Label();
-   Label p1Score = new Label();
-   Label p2Score = new Label();
-   Label currentPlayerLabel = new Label();
-   Label p1Tokens = new Label();
-   Label p2Tokens = new Label();
-
-   //start game button
-   Button nextTurn = new Button();
 
    Player currentPlayer;
 
@@ -60,34 +36,6 @@ public class Game extends Application {
    //figure out a pop up for questions
 
    int round = 1;
-
-   public static void main(String args[]) throws IOException, ParseException
-   {
-
-      /*String player1Name = "";
-      String player2Name = "";
-
-      System.out.println("Enter Player 1's Name:");
-
-      // create a new scanner
-      Scanner inputReader = new Scanner(System.in);
-
-      // accept player 1's name
-      player1Name = ( inputReader.nextLine() );
-
-      System.out.println("Enter Player 2's Name:");
-
-      // accept player 2's name
-      player2Name = ( inputReader.nextLine() );
-
-      //launch(args);
-
-      //Game game = new Game(player1Name , player2Name, inputReader);
-*/
-      launch(args);
-
-   }
-
 
    /**
     * Initializes and starts the WoJ game
@@ -143,73 +91,6 @@ public class Game extends Application {
 
    }
 
-   public void start(Stage myStage) {
-      myStage.setTitle("Wheel of Jeopardy");
-      GridPane rootNode = new GridPane();
-      Scene myScene = new Scene(rootNode, 800, 500);
-
-      rootNode.setPadding(new Insets(30));
-      
-      //set up round counter
-      rootNode.add(roundCounter, 0, 0);
-      roundCounter.setText("Round " + Integer.toString(round));
-
-      //set up spin counter
-      rootNode.add(spins, 1, 0);
-      spins.setText("Spins remaining: " + Integer.toString(this.wheel.getSpinCounter()));
-
-      //set up player score fields:
-      rootNode.add(this.p1Score, 0, 2);
-      p1Score.setText(this.player1.getName() + "'s score: " + this.player1.getScore());
-      rootNode.add(this.p2Score, 0, 3);
-      p2Score.setText(this.player2.getName() + "'s score: " + this.player2.getScore());
-
-      //set up free token counters
-      rootNode.add(this.p1Tokens, 0, 4);
-      p1Tokens.setText(this.player1.getName() + "'s tokens: " + this.player1.getFreeTurn());
-      rootNode.add(this.p2Tokens, 0, 5);
-      p2Tokens.setText(this.player2.getName() + "'s tokens: " + this.player2.getFreeTurn());
-
-      //set up current player label
-      rootNode.add(this.currentPlayerLabel, 5, 0);
-      currentPlayerLabel.setText("Current player: " + this.player1.getName());
-
-      //rootNode.add(spinWheelButton, 0, 7);
-      //spinWheelButton.setText("Spin Wheel");
-      //spinWheelButton.setOnAction(event -> this.wheel.spinWheel(ew));
-
-      //rootNode.setMaxSize(100, 100);
-
-      //GridPane.setConstraints(question, 75, 50);
-      //rootNode.getChildren().addAll(question);
-
-      //rootNode.add(question, 0, 99);
-      //question.setText("What color is the sky?");
-      //rootNode.add(answer1, 75, 51);
-      //answer1.setText("No more questions");
-      //answer1.setOnAction(event -> i.i = 1);
-      //rootNode.add(answer2, 75, 52);
-      //answer2.setText("Bring it back!");
-      //answer2.setOnAction(event -> i.i= -1);
-      //rootNode.add(answer3, 75, 53);
-      //answer3.setText("Purple");
-      //answer3.setOnAction(event -> i.i = -1);
-      //question.setVisible(false);
-      //answer1.setVisible(false);
-      //answer2.setVisible(false);
-      //answer3.setVisible(false);
-
-      myStage.setScene(myScene);
-      myStage.show();
-
-      //this.takeTurn(player1);
-
-      rootNode.add(nextTurn, 75, 54);
-      nextTurn.setText("Next Turn");
-      nextTurn.setOnAction(event -> takeTurn(currentPlayer));
-
-   }
-
    /**
     * Executes a full turn of one player. Given that spins remain in the
     * round.
@@ -244,7 +125,6 @@ public class Game extends Application {
       //spinWheelButton.setVisible(true);
       inputReader.nextLine();
       wheel.spinWheel(ew);
-      spins.setText("Spins remaining: " + Integer.toString(this.wheel.getSpinCounter()));
 
       while(ew.myEnum == null)
       {
@@ -266,8 +146,6 @@ public class Game extends Application {
             if(answer.equalsIgnoreCase("y"))
             {
                p.subtractFreeTurn();
-               p1Tokens.setText(this.player1.getName() + "'s tokens: " + this.player1.getFreeTurn());
-               p2Tokens.setText(this.player2.getName() + "'s tokens: " + this.player2.getFreeTurn());
                return;
             }
          }
@@ -276,8 +154,6 @@ public class Game extends Application {
 
       case FREE_TURN :
          p.addFreeTurn();
-         p1Tokens.setText(this.player1.getName() + "'s tokens: " + this.player1.getFreeTurn());
-         p2Tokens.setText(this.player2.getName() + "'s tokens: " + this.player2.getFreeTurn());
          System.out.println("You get a free turn token!");
          return;
 
@@ -289,8 +165,6 @@ public class Game extends Application {
             // bankrupt player by setting score to 0
             p.setScore(0);
          }
-         p1Score.setText(this.player1.getName() + "'s score: " + this.player1.getScore());
-         p2Score.setText(this.player2.getName() + "'s score: " + this.player2.getScore());
          break;
 
       case PLAYER_CHOICE :
@@ -333,22 +207,12 @@ public class Game extends Application {
                   if(answer.equalsIgnoreCase("y"))
                   {
                      p.subtractFreeTurn();
-                     p1Tokens.setText(this.player1.getName() + "'s tokens: " + this.player1.getFreeTurn());
-                     p2Tokens.setText(this.player2.getName() + "'s tokens: " + this.player2.getFreeTurn());
                      return;
                   }
                }
             }
 
             p.setScore(p.getScore() + i.i * q.points);
-
-            p1Score.setText(this.player1.getName() + "'s score: " + this.player1.getScore());
-            p2Score.setText(this.player2.getName() + "'s score: " + this.player2.getScore());
-
-            //question.setVisible(false);
-            //answer1.setVisible(false);
-            //answer2.setVisible(false);
-            //answer3.setVisible(false);
          }
          break;
 
@@ -393,17 +257,12 @@ public class Game extends Application {
                   if(answer.equalsIgnoreCase("y"))
                   {
                      p.subtractFreeTurn();
-                     p1Tokens.setText(this.player1.getName() + "'s tokens: " + this.player1.getFreeTurn());
-                     p2Tokens.setText(this.player2.getName() + "'s tokens: " + this.player2.getFreeTurn());
                      return;
                   }
                }
             }
 
             p.setScore(p.getScore() + i.i * q.points);
-
-            p1Score.setText(this.player1.getName() + "'s score: " + this.player1.getScore());
-            p2Score.setText(this.player2.getName() + "'s score: " + this.player2.getScore());
 
             //question.setVisible(false);
             //answer1.setVisible(false);
@@ -459,29 +318,18 @@ public class Game extends Application {
                   if(answer.equalsIgnoreCase("y"))
                   {
                      p.subtractFreeTurn();
-                     p1Tokens.setText(this.player1.getName() + "'s tokens: " + this.player1.getFreeTurn());
-                     p2Tokens.setText(this.player2.getName() + "'s tokens: " + this.player2.getFreeTurn());
                      return;
                   }
                }
             }
 
             p.setScore(p.getScore() + i.i * q.points);
-
-            p1Score.setText(this.player1.getName() + "'s score: " + this.player1.getScore());
-            p2Score.setText(this.player2.getName() + "'s score: " + this.player2.getScore());
-
-            //question.setVisible(false);
-            //answer1.setVisible(false);
-            //answer2.setVisible(false);
-            //answer3.setVisible(false);
          }
       }
       
       System.out.println("Turn is over, moving to next player's turn.");
       //takeTurn(p.nextPlayer);
       currentPlayer = p.nextPlayer;
-      currentPlayerLabel.setText("Current player: " + this.currentPlayer.getName());
 
    }
 
