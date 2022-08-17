@@ -43,10 +43,9 @@ public class Game {
     * @param player1Name - String representing player 1's name
     * @param player2Name - String representing player 2's name
     */
-   public Game(String player1Name , String player2Name, Scanner inputReader) throws IOException, ParseException
+   public Game(String player1Name , String player2Name) throws IOException, ParseException
    {
-      //pass reference to the board, player and wheel
-      this.inputReader = inputReader;
+
       this.wheel = new Wheel();
       this.board = new Board(inputReader);
       this.player1 = new Player(player1Name, inputReader);
