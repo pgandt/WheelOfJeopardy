@@ -218,6 +218,7 @@ public class Game extends Application {
     */
    public void takeTurn(Player p)
    {
+      Question q = null;
       
       if (!this.wheel.spinsRemaining() && this.round == 1)
       { // if no spins remaining and we're in round 1
@@ -294,27 +295,8 @@ public class Game extends Application {
 
       case PLAYER_CHOICE :
          System.out.println("Player's choice");
-         chosenCategory = p.chooseCategory();
-         this.board.askQuestion(chosenCategory);
-         break;
-
-      case OPPONENT_CHOICE :
-
-         System.out.println("Opponent's choice");
-         chosenCategory = p.nextPlayer.chooseCategory();
-         this.board.askQuestion(chosenCategory);
-         break;
-
-      case SPIN_AGAIN :
-         
-         System.out.println("Spin again!");
-         return;
-
-         // all remaining sectors
-      default :
-
-         // sector will be the category name
-         Question q = this.board.askQuestion(ew.myEnum);
+         ew.myEnum = p.chooseCategory();
+         q = this.board.askQuestion(ew.myEnum);
 
          
 
@@ -347,6 +329,132 @@ public class Game extends Application {
                if(p.getFreeTurn() != 0)
                {
                   System.out.println("Use free turn? y/n");
+                  String answer = inputReader.nextLine();
+                  if(answer.equalsIgnoreCase("y"))
+                  {
+                     p.subtractFreeTurn();
+                     p1Tokens.setText(this.player1.getName() + "'s tokens: " + this.player1.getFreeTurn());
+                     p2Tokens.setText(this.player2.getName() + "'s tokens: " + this.player2.getFreeTurn());
+                     return;
+                  }
+               }
+            }
+
+            p.setScore(p.getScore() + i.i * q.points);
+
+            p1Score.setText(this.player1.getName() + "'s score: " + this.player1.getScore());
+            p2Score.setText(this.player2.getName() + "'s score: " + this.player2.getScore());
+
+            //question.setVisible(false);
+            //answer1.setVisible(false);
+            //answer2.setVisible(false);
+            //answer3.setVisible(false);
+         }
+         break;
+
+      case OPPONENT_CHOICE :
+
+         System.out.println("Opponent's choice");
+         ew.myEnum = p.nextPlayer.chooseCategory();
+         q = this.board.askQuestion(ew.myEnum);
+
+         
+
+         if(q == null) {
+            System.out.println("Category had no questions left, skipping turn.");
+         }
+         else {
+
+            System.out.println(q.getQuestion() + "\n\n");
+            System.out.println("Enter the number of the answer you would like to select:");
+            System.out.println("\t 1.) " + q.getCorrectAnswer());
+            System.out.println("\t 2.) " + q.getWrongAnswer1());
+            System.out.println("\t 3.) " + q.getWrongAnswer2());
+
+            int decision = 0;
+            while(decision < 1 || decision > 3) {
+               decision = inputReader.nextInt();
+               if(decision < 1 || decision > 3) {
+                  System.out.println("Please select a valid answer:");
+               }
+            }
+
+            if(decision == 1) {
+               System.out.println("Correct!");
+               i.i = 1;
+            }
+            else {
+               System.out.println("Incorrect...");
+               i.i = -1;
+               if(p.getFreeTurn() != 0)
+               {
+                  System.out.println("Use free turn? y/n");
+                  String answer = inputReader.nextLine();
+                  if(answer.equalsIgnoreCase("y"))
+                  {
+                     p.subtractFreeTurn();
+                     p1Tokens.setText(this.player1.getName() + "'s tokens: " + this.player1.getFreeTurn());
+                     p2Tokens.setText(this.player2.getName() + "'s tokens: " + this.player2.getFreeTurn());
+                     return;
+                  }
+               }
+            }
+
+            p.setScore(p.getScore() + i.i * q.points);
+
+            p1Score.setText(this.player1.getName() + "'s score: " + this.player1.getScore());
+            p2Score.setText(this.player2.getName() + "'s score: " + this.player2.getScore());
+
+            //question.setVisible(false);
+            //answer1.setVisible(false);
+            //answer2.setVisible(false);
+            //answer3.setVisible(false);
+         }
+         break;
+
+      case SPIN_AGAIN :
+         
+         System.out.println("Spin again!");
+         return;
+
+         // all remaining sectors
+      default :
+
+         // sector will be the category name
+         q = this.board.askQuestion(ew.myEnum);
+
+         
+
+         if(q == null) {
+            System.out.println("Category had no questions left, skipping turn.");
+         }
+         else {
+
+            System.out.println(q.getQuestion() + "\n\n");
+            System.out.println("Enter the number of the answer you would like to select:");
+            System.out.println("\t 1.) " + q.getCorrectAnswer());
+            System.out.println("\t 2.) " + q.getWrongAnswer1());
+            System.out.println("\t 3.) " + q.getWrongAnswer2());
+
+            int decision = 0;
+            while(decision < 1 || decision > 3) {
+               decision = inputReader.nextInt();
+               if(decision < 1 || decision > 3) {
+                  System.out.println("Please select a valid answer:");
+               }
+            }
+
+            if(decision == 1) {
+               System.out.println("Correct!");
+               i.i = 1;
+            }
+            else {
+               System.out.println("Incorrect...");
+               i.i = -1;
+               if(p.getFreeTurn() != 0)
+               {
+                  System.out.println("Use free turn? y/n");
+                  inputReader.nextLine();
                   String answer = inputReader.nextLine();
                   if(answer.equalsIgnoreCase("y"))
                   {
