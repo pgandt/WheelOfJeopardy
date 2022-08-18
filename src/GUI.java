@@ -1,6 +1,9 @@
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import org.json.simple.parser.ParseException;
 
 import javafx.animation.RotateTransition;
 import javafx.application.Application;
@@ -118,35 +121,28 @@ public class GUI extends Application {
     	
     }
     
-    private void spinWheel(String sector)
+    private void spinWheel(Sector sector)
     {
     	this.setTurn(false);
     	
     	/*
     	 * Map of angle to sector
     	 */
-    	Map<String, Integer> angleMap = new HashMap<>();
+    	Map<Sector, Integer> angleMap = new HashMap<>();
 
-    	angleMap.put("Category 1", 0);
-    	angleMap.put("Opponent's Choice", 20);
-    	angleMap.put("Free Turn", 40);
-    	angleMap.put("Category 6", 60);
-    	angleMap.put("Category 4", 80);
-    	angleMap.put("Category 2", 100);
-    	angleMap.put("Spin Again", 120);
-    	angleMap.put("Category 5", 140);
-    	angleMap.put("Player's Choice", 160);
-    	angleMap.put("Category 2", 180);
-    	angleMap.put("Lose Turn", 200);
-    	angleMap.put("Category 1", 220);
-    	angleMap.put("Category 3", 240);
-    	angleMap.put("Category 5", 260);
-    	angleMap.put("Category 6", 280);
-    	angleMap.put("Bankrupt", 300);
-    	angleMap.put("Category 3", 320);
-    	angleMap.put("Category 4", 340);
-
-    	 	
+    	angleMap.put(Sector.CATEGORY1, 0);
+    	angleMap.put(Sector.OPPONENT_CHOICE, 20);
+    	angleMap.put(Sector.FREE_TURN, 40);
+    	angleMap.put(Sector.CATEGORY6, 60);
+    	angleMap.put(Sector.CATEGORY4, 80);
+    	angleMap.put(Sector.CATEGORY2, 100);
+    	angleMap.put(Sector.SPIN_AGAIN, 120);
+    	angleMap.put(Sector.CATEGORY5, 140);
+    	angleMap.put(Sector.PLAYER_CHOICE, 160);
+    	angleMap.put(Sector.LOSE_TURN, 200);
+    	angleMap.put(Sector.CATEGORY3, 240);
+    	angleMap.put(Sector.BANKRUPT, 300);
+	 	
     	int spinWheelOffset = 720;
     	int endingAngle = angleMap.get(sector);
     	RotateTransition rotate = new RotateTransition();  
@@ -248,9 +244,133 @@ public class GUI extends Application {
         this.spinWheelBtn.setOnAction(new EventHandler<ActionEvent>() {
         	
             @Override
-            public void handle(ActionEvent e) {           	
+            public void handle(ActionEvent e) {  
             	
-            	spinWheel("Category 5");
+            	Sector currentSector;
+            	Player currentPlayer;
+            	
+            	// obtain sector from game object
+            	currentSector = game.wheel.spinWheel();
+            	currentPlayer = game.getCurrentPlayer();
+            	
+            	// if the sector is lose turn, then prompt if user wants to use free turn token if they have any
+            	switch (currentSector)
+                {
+                case LOSE_TURN :
+                   System.out.println("You lose this turn!");
+                   if(currentPlayer.getFreeTurn() != 0)
+                   {
+                   }
+                   // print lose turn here or in spin wheel? Probably in spin wheel
+                   break;
+
+                case FREE_TURN :
+                	currentPlayer.addFreeTurn();
+                   System.out.println("You get a free turn token!");
+                   return;
+
+                case BANKRUPT :
+
+                   System.out.println("You've gone bankrupt!");
+                   if (currentPlayer.getScore() > 0)
+                   {
+                      // bankrupt player by setting score to 0
+                	   currentPlayer.setScore(0);
+                   }
+                   break;
+
+                case PLAYER_CHOICE :
+                	
+                	/*
+                   System.out.println("Player's choice");
+                   ew.myEnum = p.chooseCategory();
+                   q = this.board.askQuestion(ew.myEnum);
+                   */
+
+                   
+                	/*
+                   if(q == null) {
+                      System.out.println("Category had no questions left, skipping turn.");
+                   }
+                   else {
+
+                      System.out.println(q.getQuestion() + "\n\n");
+                      System.out.println("Enter the number of the answer you would like to select:");
+                      System.out.println("\t 1.) " + q.getCorrectAnswer());
+                      System.out.println("\t 2.) " + q.getWrongAnswer1());
+                      System.out.println("\t 3.) " + q.getWrongAnswer2());
+
+                      int decision = 0;
+                      }*/
+                   break;
+
+                case OPPONENT_CHOICE :
+
+                   System.out.println("Opponent's choice");
+                   
+                   /*
+                   ew.myEnum = p.nextPlayer.chooseCategory();
+                   q = this.board.askQuestion(ew.myEnum);
+
+                   
+
+                   if(q == null) {
+                      System.out.println("Category had no questions left, skipping turn.");
+                   }
+                   else {
+
+                      System.out.println(q.getQuestion() + "\n\n");
+                      System.out.println("Enter the number of the answer you would like to select:");
+                      System.out.println("\t 1.) " + q.getCorrectAnswer());
+                      System.out.println("\t 2.) " + q.getWrongAnswer1());
+                      System.out.println("\t 3.) " + q.getWrongAnswer2());
+
+                      int decision = 0;
+
+                      if(decision == 1) {
+                         System.out.println("Correct!");
+                         i.i = 1;
+                      }
+                      else {
+                         System.out.println("Incorrect...");
+                         i.i = -1;
+                      }
+
+                      p.setScore(p.getScore() + i.i * q.points);
+                   }
+                   */
+                   break;
+
+                case SPIN_AGAIN :
+                   
+                   System.out.println("Spin again!");
+                   return;
+
+                   // all remaining sectors
+                default :
+
+                	/*
+                   // sector will be the category name
+                   q = this.board.askQuestion(ew.myEnum);
+					
+                   
+
+                   if(q == null) {
+                      System.out.println("Category had no questions left, skipping turn.");
+                   }
+                   else {
+
+                      System.out.println(q.getQuestion() + "\n\n");
+                      System.out.println("Enter the number of the answer you would like to select:");
+                      System.out.println("\t 1.) " + q.getCorrectAnswer());
+                      System.out.println("\t 2.) " + q.getWrongAnswer1());
+                      System.out.println("\t 3.) " + q.getWrongAnswer2());
+
+                      p.setScore(p.getScore() + i.i * q.points);
+                   }*/
+                }
+            	
+            	spinWheel(currentSector);
 
             }
         });
@@ -366,7 +486,13 @@ public class GUI extends Application {
             player2Txt.setText("Player 2: " + player2TextField.getText());
             
             // set player 1 and player 2 names in the Game
-            game = new Game(player1TextField.getText(), player2TextField.getText());
+            try {
+				game = new Game(player1TextField.getText(), player2TextField.getText());
+				
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
             
             playerStage.close();
             

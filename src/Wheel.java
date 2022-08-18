@@ -25,7 +25,7 @@ public class Wheel {
        return true;
     }
 
-    public void spinWheel(Game.enumWrapper e) { //public Sector spinWheel(Player p)
+    public Sector spinWheel() { //public Sector spinWheel(Player p)
         
         // Create instance of Random class
         Random rand = new Random();
@@ -36,7 +36,7 @@ public class Wheel {
         spinCounter--;
 
 
-        e.myEnum = this.sectors[rand_int1];
+        return this.sectors[rand_int1];
     }
 
     public int getSpinCounter() {

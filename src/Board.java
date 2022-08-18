@@ -30,7 +30,7 @@ public class Board {
     {
         categories = new ArrayList<Category>();
         JSONParser parser = new JSONParser();
-        Path jsonFile = Path.of("questions.json");
+        Path jsonFile = Path.of("C:\\Users\\shaun\\Documents\\GitHub\\WheelOfJeopardy\\questions.json");//Path.of("questions.json");
         String jsonString = Files.readString(jsonFile);
         JSONObject jsonData = (JSONObject) parser.parse(jsonString);
         JSONObject r1 = (JSONObject) jsonData.get("round1Questions");

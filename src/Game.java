@@ -9,10 +9,10 @@ import org.json.simple.parser.ParseException;
  */
 public class Game {
 
-   private Wheel wheel;
-   private Board board;
-   private Player player1;
-   private Player player2;
+   public Wheel wheel;
+   public Board board;
+   public Player player1;
+   public Player player2;
 
    Player currentPlayer;
 
@@ -43,8 +43,12 @@ public class Game {
       this.player1.nextPlayer = this.player2;
       this.player2.nextPlayer = this.player1;
 
-      takeTurn(this.player1);
 
+   }
+   
+   public Player getCurrentPlayer()
+   {
+	   return this.player1;
    }
 
    /**
@@ -77,7 +81,7 @@ public class Game {
 
       ew.myEnum = null;
       //spinWheelButton.setVisible(true);
-      wheel.spinWheel(ew);
+      //wheel.spinWheel(ew);
 
       while(ew.myEnum == null)
       {
