@@ -1,5 +1,8 @@
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -88,7 +91,7 @@ public class GUI extends Application {
         primaryStage.show(); 
         
         this.setTurn(true);
-        
+
     }
     
     private void setTurn(boolean player1)
@@ -123,7 +126,6 @@ public class GUI extends Application {
     
     private void spinWheel(Sector sector)
     {
-    	this.setTurn(false);
     	
     	/*
     	 * Map of angle to sector
@@ -153,15 +155,7 @@ public class GUI extends Application {
     	
     	rotate.setNode(this.wheelImageView);  
     	
-    	rotate.setOnFinished(e -> 
-    	{qPoints[0][0].setStyle("-fx-background-color: lightgreen;");
-        qPoints[1][0].setStyle("-fx-background-color: lightgreen;");
-        qPoints[2][0].setStyle("-fx-background-color: red;");
-        
-        qPoints[0][4].setStyle("-fx-background-color: lightgreen;");
-        qPoints[1][4].setStyle("-fx-background-color: red;");
-        qPoints[2][4].setStyle("-fx-background-color: lightgreen;");
-        qPoints[3][4].setStyle("-fx-background-color: red;");});
+    	rotate.setOnFinished(e -> this.handleWheelResult());
     	
     	rotate.play();
     	
@@ -169,6 +163,121 @@ public class GUI extends Application {
     	this.spinsRemainTxt.setText("Spins Remaining: " + 49);
     	
 
+    }
+    
+    private void handleWheelResult()
+    {
+    	qPoints[0][0].setStyle("-fx-background-color: lightgreen;");
+        qPoints[1][0].setStyle("-fx-background-color: lightgreen;");
+        qPoints[2][0].setStyle("-fx-background-color: red;");
+        
+        qPoints[0][4].setStyle("-fx-background-color: lightgreen;");
+        qPoints[1][4].setStyle("-fx-background-color: red;");
+        qPoints[2][4].setStyle("-fx-background-color: lightgreen;");
+        qPoints[3][4].setStyle("-fx-background-color: red;");
+    	
+    	// if the sector is lose turn, then prompt if user wants to use free turn token if they have any
+    	switch (currentSector)
+        {
+        case LOSE_TURN :
+        	
+        	this.currentPlayer.addFreeTurn();
+
+           if(this.currentPlayer.getFreeTurn() != 0)
+           {
+        	   openFreeTurnPrompt();
+        	   
+        	   if(this.useFreeTurn)
+        	   {
+        		   System.out.println("worked");
+        	   }
+           }
+           // print lose turn here or in spin wheel? Probably in spin wheel
+           break;
+
+        case FREE_TURN :
+        	
+        	this.currentPlayer.addFreeTurn();       	
+        	openMessagePrompt("You get a free turn token!");
+           break;
+
+        case BANKRUPT :
+
+        	openMessagePrompt("You've gone bankrupt!");
+           if (this.currentPlayer.getScore() > 0)
+           {
+              // bankrupt player by setting score to 0
+        	   this.currentPlayer.setScore(0);
+        	   
+           }
+           break;
+
+        case PLAYER_CHOICE :
+        	
+        	this.openCategoryPrompt("Player's category choice!");
+        	
+        	/*
+           System.out.println("Player's choice");
+           ew.myEnum = p.chooseCategory();
+           q = this.board.askQuestion(ew.myEnum);
+           */
+
+           
+        	/*
+           if(q == null) {
+              System.out.println("Category had no questions left, skipping turn.");
+           }
+           else {
+
+              System.out.println(q.getQuestion() + "\n\n");
+              System.out.println("Enter the number of the answer you would like to select:");
+              System.out.println("\t 1.) " + q.getCorrectAnswer());
+              System.out.println("\t 2.) " + q.getWrongAnswer1());
+              System.out.println("\t 3.) " + q.getWrongAnswer2());
+
+              int decision = 0;
+              }*/
+           break;
+
+        case OPPONENT_CHOICE :
+
+        	this.openCategoryPrompt("Oppenent's category choice!");
+           
+           break;
+
+        case SPIN_AGAIN :
+           
+        	openMessagePrompt("Spin Again!");
+           break;
+
+           // all remaining sectors
+        default :
+
+        	this.openQuestionPrompt();
+        	/*
+           // sector will be the category name
+           q = this.board.askQuestion(ew.myEnum);
+			
+           
+
+           if(q == null) {
+              System.out.println("Category had no questions left, skipping turn.");
+           }
+           else {
+
+              System.out.println(q.getQuestion() + "\n\n");
+              System.out.println("Enter the number of the answer you would like to select:");
+              System.out.println("\t 1.) " + q.getCorrectAnswer());
+              System.out.println("\t 2.) " + q.getWrongAnswer1());
+              System.out.println("\t 3.) " + q.getWrongAnswer2());
+
+              p.setScore(p.getScore() + i.i * q.points);
+           }*/
+        }
+    	
+    	
+    	
+        
     }
     
     private void addTitleAndText(GridPane grid)
@@ -244,133 +353,14 @@ public class GUI extends Application {
         this.spinWheelBtn.setOnAction(new EventHandler<ActionEvent>() {
         	
             @Override
-            public void handle(ActionEvent e) {  
-            	
-            	Sector currentSector;
-            	Player currentPlayer;
-            	
+            public void handle(ActionEvent e) {                        	
+            	           	
             	// obtain sector from game object
-            	currentSector = game.wheel.spinWheel();
+            	//currentSector = game.wheel.spinWheel();
+            	currentSector = Sector.CATEGORY2;
             	currentPlayer = game.getCurrentPlayer();
             	
-            	// if the sector is lose turn, then prompt if user wants to use free turn token if they have any
-            	switch (currentSector)
-                {
-                case LOSE_TURN :
-                   System.out.println("You lose this turn!");
-                   if(currentPlayer.getFreeTurn() != 0)
-                   {
-                   }
-                   // print lose turn here or in spin wheel? Probably in spin wheel
-                   break;
-
-                case FREE_TURN :
-                	currentPlayer.addFreeTurn();
-                   System.out.println("You get a free turn token!");
-                   return;
-
-                case BANKRUPT :
-
-                   System.out.println("You've gone bankrupt!");
-                   if (currentPlayer.getScore() > 0)
-                   {
-                      // bankrupt player by setting score to 0
-                	   currentPlayer.setScore(0);
-                   }
-                   break;
-
-                case PLAYER_CHOICE :
-                	
-                	/*
-                   System.out.println("Player's choice");
-                   ew.myEnum = p.chooseCategory();
-                   q = this.board.askQuestion(ew.myEnum);
-                   */
-
-                   
-                	/*
-                   if(q == null) {
-                      System.out.println("Category had no questions left, skipping turn.");
-                   }
-                   else {
-
-                      System.out.println(q.getQuestion() + "\n\n");
-                      System.out.println("Enter the number of the answer you would like to select:");
-                      System.out.println("\t 1.) " + q.getCorrectAnswer());
-                      System.out.println("\t 2.) " + q.getWrongAnswer1());
-                      System.out.println("\t 3.) " + q.getWrongAnswer2());
-
-                      int decision = 0;
-                      }*/
-                   break;
-
-                case OPPONENT_CHOICE :
-
-                   System.out.println("Opponent's choice");
-                   
-                   /*
-                   ew.myEnum = p.nextPlayer.chooseCategory();
-                   q = this.board.askQuestion(ew.myEnum);
-
-                   
-
-                   if(q == null) {
-                      System.out.println("Category had no questions left, skipping turn.");
-                   }
-                   else {
-
-                      System.out.println(q.getQuestion() + "\n\n");
-                      System.out.println("Enter the number of the answer you would like to select:");
-                      System.out.println("\t 1.) " + q.getCorrectAnswer());
-                      System.out.println("\t 2.) " + q.getWrongAnswer1());
-                      System.out.println("\t 3.) " + q.getWrongAnswer2());
-
-                      int decision = 0;
-
-                      if(decision == 1) {
-                         System.out.println("Correct!");
-                         i.i = 1;
-                      }
-                      else {
-                         System.out.println("Incorrect...");
-                         i.i = -1;
-                      }
-
-                      p.setScore(p.getScore() + i.i * q.points);
-                   }
-                   */
-                   break;
-
-                case SPIN_AGAIN :
-                   
-                   System.out.println("Spin again!");
-                   return;
-
-                   // all remaining sectors
-                default :
-
-                	/*
-                   // sector will be the category name
-                   q = this.board.askQuestion(ew.myEnum);
-					
-                   
-
-                   if(q == null) {
-                      System.out.println("Category had no questions left, skipping turn.");
-                   }
-                   else {
-
-                      System.out.println(q.getQuestion() + "\n\n");
-                      System.out.println("Enter the number of the answer you would like to select:");
-                      System.out.println("\t 1.) " + q.getCorrectAnswer());
-                      System.out.println("\t 2.) " + q.getWrongAnswer1());
-                      System.out.println("\t 3.) " + q.getWrongAnswer2());
-
-                      p.setScore(p.getScore() + i.i * q.points);
-                   }*/
-                }
-            	
-            	spinWheel(currentSector);
+            	spinWheel(currentSector);  	
 
             }
         });
@@ -426,7 +416,7 @@ public class GUI extends Application {
     	
     }
     
-    public void openPlayerPrompt()
+    private void openPlayerPrompt()
     {
         GridPane playerGrid = new GridPane();
         
@@ -492,7 +482,7 @@ public class GUI extends Application {
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			}
+			}       
             
             playerStage.close();
             
@@ -507,6 +497,335 @@ public class GUI extends Application {
         playerStage.show();
 
     }
+    
+    private void openFreeTurnPrompt()
+    {
+        GridPane freeTurnPromptGrid = new GridPane();
+        
+        // default position of the grid from the top left of the scene to the center
+        freeTurnPromptGrid.setAlignment(Pos.CENTER);
+        
+        // spacing between the rows and the columns
+        freeTurnPromptGrid.setHgap(10);
+        freeTurnPromptGrid.setVgap(10);
+        
+        // space around the edge of the grid pane (top, right, bottom, left)
+        freeTurnPromptGrid.setPadding(new Insets(25, 25, 25, 25));
+    	
+        freeTurnPromptGrid.setGridLinesVisible(true);
+    	
+        Stage freeTurnPromptStage = new Stage();
+        freeTurnPromptStage.setTitle("Use Free Turn Token");
+        
+        Text freeTurnTitle = new Text("Do you want to use a free turn token?");
+        freeTurnTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        
+        freeTurnPromptGrid.add(freeTurnTitle, 0, 0, 3, 1);
+        
+        Button yesBtn = new Button("Yes");
+        yesBtn.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        
+        Button noBtn = new Button("No");
+        noBtn.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+
+        freeTurnPromptGrid.add(yesBtn, 1, 1);
+        freeTurnPromptGrid.add(noBtn, 2, 1);
+        
+        yesBtn.setOnAction(new EventHandler<ActionEvent>() {
+        	 
+            @Override
+            public void handle(ActionEvent e) {
+
+            	useFreeTurn = true;
+            	
+            	freeTurnPromptStage.close();
+            			
+            }
+        });
+        
+        noBtn.setOnAction(new EventHandler<ActionEvent>() {
+       	 
+            @Override
+            public void handle(ActionEvent e) {
+
+            	useFreeTurn = false;
+            	
+            	freeTurnPromptStage.close();
+            			
+            }
+        });
+        
+        Scene freeTurnScene = new Scene(freeTurnPromptGrid);            
+        freeTurnPromptStage.setScene(freeTurnScene);
+        
+        freeTurnPromptStage.show();
+    }
+    
+    private void openMessagePrompt(String message)
+    {
+        GridPane messageGrid = new GridPane();
+        
+        // default position of the grid from the top left of the scene to the center
+        messageGrid.setAlignment(Pos.CENTER);
+        
+        // spacing between the rows and the columns
+        messageGrid.setHgap(10);
+        messageGrid.setVgap(10);
+        
+        // space around the edge of the grid pane (top, right, bottom, left)
+        messageGrid.setPadding(new Insets(25, 25, 25, 25));
+    	
+        messageGrid.setGridLinesVisible(true);
+    	
+        Stage messageStage = new Stage();
+        messageStage.setTitle("Notification");
+        
+        Text messageTitle = new Text(message);
+        messageTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        
+        messageGrid.add(messageTitle, 0, 0, 3, 1);
+        
+        Button okBtn = new Button("Ok");
+        okBtn.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+
+        messageGrid.add(okBtn, 1, 1);
+        
+        okBtn.setOnAction(new EventHandler<ActionEvent>() {
+        	 
+            @Override
+            public void handle(ActionEvent e) {
+            	
+            	messageStage.close();
+            			
+            }
+        });
+        
+        
+        Scene freeTurnScene = new Scene(messageGrid);            
+        messageStage.setScene(freeTurnScene);
+        
+        messageStage.show();
+    }
+    
+    private void openCategoryPrompt(String message)
+    {
+        GridPane categoryPromptGrid = new GridPane();
+        
+        // default position of the grid from the top left of the scene to the center
+        categoryPromptGrid.setAlignment(Pos.CENTER);
+        
+        // spacing between the rows and the columns
+        categoryPromptGrid.setHgap(10);
+        categoryPromptGrid.setVgap(10);
+        
+        // space around the edge of the grid pane (top, right, bottom, left)
+        categoryPromptGrid.setPadding(new Insets(25, 25, 25, 25));
+    	
+        categoryPromptGrid.setGridLinesVisible(true);
+    	
+        Stage categoryPromptStage = new Stage();
+        categoryPromptStage.setTitle("Category Prompt");
+        
+        Text categoryTitle = new Text(message);
+        categoryTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        
+        categoryPromptGrid.add(categoryTitle, 0, 0, 3, 1);
+        
+        Button[] categoryBtn = new Button[6];        
+        
+        
+    	for(int i=0; i<categoryBtn.length; i++)
+    	{   
+
+    		categoryBtn[i] = new Button(this.game.board.categories.get(i).getCategoryName());
+    		categoryBtn[i].setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+		
+    		categoryPromptGrid.add(categoryBtn[i], 0, i+1);
+    	}
+     
+    	
+    	categoryBtn[0].setOnAction(new EventHandler<ActionEvent>() {
+        	 
+            @Override
+            public void handle(ActionEvent e) {
+
+            	currentCategory = game.board.categories.get(0);
+            	
+            	categoryPromptStage.close();
+            			
+            }
+        });
+    	
+    	categoryBtn[1].setOnAction(new EventHandler<ActionEvent>() {
+       	 
+            @Override
+            public void handle(ActionEvent e) {
+
+            	currentCategory = game.board.categories.get(1);
+            	
+            	categoryPromptStage.close();
+            			
+            }
+        });
+    	
+    	categoryBtn[2].setOnAction(new EventHandler<ActionEvent>() {
+          	 
+            @Override
+            public void handle(ActionEvent e) {
+
+            	currentCategory = game.board.categories.get(2);
+            	
+            	categoryPromptStage.close();
+            			
+            }
+        });
+    	
+    	categoryBtn[3].setOnAction(new EventHandler<ActionEvent>() {
+          	 
+            @Override
+            public void handle(ActionEvent e) {
+
+            	currentCategory = game.board.categories.get(3);
+            	
+            	categoryPromptStage.close();
+            			
+            }
+        });
+    	
+    	categoryBtn[4].setOnAction(new EventHandler<ActionEvent>() {
+          	 
+            @Override
+            public void handle(ActionEvent e) {
+
+            	currentCategory = game.board.categories.get(4);
+            	
+            	categoryPromptStage.close();
+            			
+            }
+        });
+    	
+    	categoryBtn[5].setOnAction(new EventHandler<ActionEvent>() {
+         	 
+            @Override
+            public void handle(ActionEvent e) {
+
+            	currentCategory = game.board.categories.get(5);
+            	
+            	categoryPromptStage.close();
+            			
+            }
+        });
+   
+        Scene categoryScene = new Scene(categoryPromptGrid);            
+        categoryPromptStage.setScene(categoryScene);
+        
+        categoryPromptStage.show();
+    }
+    
+    private void openQuestionPrompt()
+    {
+        GridPane questionGrid = new GridPane();
+        
+        // default position of the grid from the top left of the scene to the center
+        questionGrid.setAlignment(Pos.CENTER);
+        
+        // spacing between the rows and the columns
+        questionGrid.setHgap(10);
+        questionGrid.setVgap(10);
+        
+        // space around the edge of the grid pane (top, right, bottom, left)
+        questionGrid.setPadding(new Insets(25, 25, 25, 25));
+    	
+        questionGrid.setGridLinesVisible(true);
+    	
+        Stage questionStage = new Stage();
+        questionStage.setTitle("Answer Question");
+        
+        this.currentQuestion = this.game.board.askQuestion(this.currentSector);
+        
+        Text questionTitle = new Text(this.currentQuestion.getQuestion());
+        questionTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        
+        questionGrid.add(questionTitle, 0, 0, 4, 1);
+        
+        String[] answers = new String[3];
+        
+        answers[0] = this.currentQuestion.getCorrectAnswer();
+        answers[1] = this.currentQuestion.getWrongAnswer1();
+        answers[2] = this.currentQuestion.getWrongAnswer2();
+        
+        List<String> mixedAnswers = Arrays.asList(answers);
+        
+        Collections.shuffle(mixedAnswers);
+        
+        Button aBtn = new Button(mixedAnswers.get(0));
+        aBtn.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        
+        Button bBtn = new Button(mixedAnswers.get(1));
+        bBtn.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        
+        Button cBtn = new Button(mixedAnswers.get(2));
+        cBtn.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+
+        questionGrid.add(aBtn, 1, 1);
+        questionGrid.add(bBtn, 1, 2);
+        questionGrid.add(cBtn, 1, 3);
+        
+        aBtn.setOnAction(new EventHandler<ActionEvent>() {
+        	 
+            @Override
+            public void handle(ActionEvent e) {
+            	
+            	if(aBtn.getText() == currentQuestion.getCorrectAnswer())
+            	{
+            		System.out.println("Correct!");
+            	}
+            	
+            	questionStage.close();
+            			
+            }
+        });
+        
+        bBtn.setOnAction(new EventHandler<ActionEvent>() {
+       	 
+            @Override
+            public void handle(ActionEvent e) {
+
+            	if(bBtn.getText() == currentQuestion.getCorrectAnswer())
+            	{
+            		System.out.println("Correct!");
+            	}
+            	questionStage.close();
+            			
+            }
+        });
+        
+        cBtn.setOnAction(new EventHandler<ActionEvent>() {
+          	 
+            @Override
+            public void handle(ActionEvent e) {
+
+            	if(cBtn.getText() == currentQuestion.getCorrectAnswer())
+            	{
+            		System.out.println("Correct!");
+            	}
+            	
+            	questionStage.close();
+            			
+            }
+        });
+        
+        Scene questionScene = new Scene(questionGrid);            
+        questionStage.setScene(questionScene);
+        
+        questionStage.show();
+    }
+    
+    
+    private Player currentPlayer;
+    private Sector currentSector;
+    private Category currentCategory;
+    private Question currentQuestion;
     
     private Game game;
     
@@ -528,4 +847,6 @@ public class GUI extends Application {
     private Text[] category;
     
     private String picBasePath;
+    
+    private boolean useFreeTurn;
 }

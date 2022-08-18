@@ -13,8 +13,7 @@ public class Game {
    public Board board;
    public Player player1;
    public Player player2;
-
-   Player currentPlayer;
+   private Player currentPlayer;
 
    //wrapper for enum in spinWheel
    public enumWrapper ew = new enumWrapper();
@@ -39,6 +38,8 @@ public class Game {
       this.board = new Board();
       this.player1 = new Player(player1Name);
       this.player2 = new Player(player2Name);
+      
+      this.currentPlayer = this.player1;
 
       this.player1.nextPlayer = this.player2;
       this.player2.nextPlayer = this.player1;
@@ -46,9 +47,21 @@ public class Game {
 
    }
    
+   public void endTurn(Player player)
+   {
+	   if(this.player1.getName() == player.getName())
+	   {
+		   this.currentPlayer = this.player2;
+	   }
+	   else
+	   {
+		   this.currentPlayer = this.player1;
+	   }
+   }
+   
    public Player getCurrentPlayer()
    {
-	   return this.player1;
+	   return this.currentPlayer;
    }
 
    /**
