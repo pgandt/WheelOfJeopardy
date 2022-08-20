@@ -45,6 +45,7 @@ public class GUI extends Application {
     
     public GUI()
     {
+    	this.temp = 0;
     		
     	this.player1Txt = new Text("Player 1:");	
     	this.player2Txt = new Text("Player 2:");
@@ -93,40 +94,81 @@ public class GUI extends Application {
 
     }
     
+    private void resetBoard(boolean round1)
+    {
+    	for(int i=0; i<gameCategories.length; i++)
+    	{   
+
+    		this.gameCategories[i].setText(this.game.board.categories.get(i).getCategoryName());
+
+    	}
+
+        	// obtain point values from game object
+        	for(int row=0; row < this.qPoints.length; row++)
+        	{
+        		for(int col=0; col < this.qPoints[row].length; col++)
+        		{
+        			if(round1)
+        			{
+        				this.qPoints[row][col].setText(Integer.toString((row+1)*100));
+        			}
+        			else
+        			{
+        				this.qPoints[row][col].setText(Integer.toString((row+1)*200));
+        			}
+        			
+        			this.qPoints[row][col].setStyle("-fx-background-color: lightblue;");      			
+        			 			
+        		}
+        	}
+
+    	
+    }
+    
+    private void handleCatSelect(int catIndex)
+    {
+    	if(this.game.board.categories.get(catIndex).questionsLeft())
+    	{
+        	this.currentCategory = this.game.board.categories.get(catIndex);
+        	this.currentSector = Sector.valueOf("CATEGORY" + (catIndex+1));
+        	
+        	openQuestionPrompt();
+    	}
+    	else
+    	{
+    		this.openMessagePrompt("No questions remaining in " + this.game.board.categories.get(catIndex).getCategoryName() + ". Spin again!");
+    	}
+
+    }
+    
     private void handleAnswer(boolean correct)
     {
     	if(correct)
     	{
-    		colorBoard(this.currentSector.ordinal(),4-this.currentCategory.numQuestionsLeft(), true);  
+    		colorBoard(this.currentSector.ordinal(),4-this.currentCategory.numQuestionsLeft(), true); 
     		
-    		this.currentPlayer.setScore(this.currentPlayer.getScore() + this.currentQuestion.points);
+    		this.updateScore(this.currentPlayer.getScore() + this.currentQuestion.points);     		  		
+    		
     		openMessagePrompt("Correct, spin again!");
-    		if(this.currentPlayer.getName() == this.game.player1.getName())
-    		{
-    			this.player1ScoreTxt.setText("Score: " + this.currentPlayer.getScore());
-    		}
-    		else
-    		{
-    			this.player2ScoreTxt.setText("Score: " + this.currentPlayer.getScore());
-    		}
+
     	}
     	else
     	{
-    		colorBoard(this.currentSector.ordinal(),4-this.currentCategory.numQuestionsLeft(), false);
+    		colorBoard(this.currentSector.ordinal(),4-this.currentCategory.numQuestionsLeft(), false);   
     		
-    		this.currentPlayer.setScore(this.currentPlayer.getScore() - this.currentQuestion.points);
-    		if(this.currentPlayer.getName() == this.game.player1.getName())
-    		{
-    			this.player1ScoreTxt.setText("Score: " + this.currentPlayer.getScore());
-    			this.setTurn(false);
-    		}
-    		else
-    		{
-    			this.player2ScoreTxt.setText("Score: " + this.currentPlayer.getScore());
-    			this.setTurn(true);
-    		}
+    		this.updateScore(this.currentPlayer.getScore() - this.currentQuestion.points); 		
     		
-    		openMessagePrompt("Incorrect, turn over!");
+            if(this.currentPlayer.getFreeTurn() != 0)
+            {
+         	   this.openFreeTurnPrompt("Incorrect, do you want to use a free turn token?");
+         	   
+            }
+            else
+            {
+         	   this.openMessagePrompt("Incorrect, turn over!");
+         	   this.switchTurns();
+            }
+
     	}
     	
 
@@ -146,9 +188,9 @@ public class GUI extends Application {
     	
     }
     
-    private void setTurn(boolean player1)
+    private void switchTurns()
     {
-    	if(player1)
+    	if(this.currentPlayer.getName() == this.game.player2.getName())
     	{
     		this.player1Txt.setFill(Color.RED);
     		this.player1ScoreTxt.setFill(Color.RED);
@@ -178,6 +220,47 @@ public class GUI extends Application {
     	
     }
     
+    private void updateScore(int newScore)
+    {
+
+    	this.currentPlayer.setScore(newScore);
+    	    	
+ 	   		
+    	if(this.currentPlayer.getName() == this.game.player1.getName())
+		{
+			this.player1ScoreTxt.setText("Score: " + this.currentPlayer.getScore());
+		}
+		else
+		{
+			this.player2ScoreTxt.setText("Score: " + this.currentPlayer.getScore());
+		}
+    }
+    
+    private void updateTokens(boolean add)
+    {
+    	if(add)
+    	{
+    		this.currentPlayer.addFreeTurn();
+    	}
+    	else
+    	{
+    		this.currentPlayer.subtractFreeTurn();
+    	}
+    	
+    	
+    	if(this.currentPlayer.getName() == this.game.player1.getName())
+    	{
+    		this.player1TokensTxt.setText("Tokens: " + this.currentPlayer.getFreeTurns());
+    	}
+    	else
+    	{
+    		this.player2TokensTxt.setText("Tokens: " + this.currentPlayer.getFreeTurns());
+    	}
+    	
+    }
+    
+    
+    
     private void spinWheel(Sector sector)
     {
     	
@@ -203,7 +286,7 @@ public class GUI extends Application {
     	int endingAngle = angleMap.get(sector);
     	RotateTransition rotate = new RotateTransition();  
     	
-    	rotate.setDuration(Duration.millis(3000)); 
+    	rotate.setDuration(Duration.millis(1)); 
     	rotate.setFromAngle(0);
     	rotate.setToAngle(spinWheelOffset + endingAngle);
     	
@@ -219,107 +302,101 @@ public class GUI extends Application {
 
     }
     
+   
+    private void roundCheck()
+    {
+        if ((!this.game.wheel.spinsRemaining() && this.game.round == 1)||(!this.game.board.questionsLeft() && this.game.round == 1))        { // if no spins remaining and we're in round 1
+        	      
+        	this.roundBtn.setDisable(false);
+        	this.spinWheelBtn.setDisable(true);
+        	this.game.round = 2;
+        	
+        }
+        else if ((!this.game.wheel.spinsRemaining() && this.game.round == 2) ||(!this.game.board.questionsLeft()&& this.game.round == 2))
+        { // if no spins remaining and we're in round 2
+        	
+        	this.winnerBtn.setDisable(false);
+        	this.spinWheelBtn.setDisable(true);
+   
+        }
+    }
+    
     private void handleWheelResult()
-    {   	
+    {  
+    	
+        
     	// if the sector is lose turn, then prompt if user wants to use free turn token if they have any
     	switch (this.currentSector)
         {
         case LOSE_TURN :
         	
-        	this.currentPlayer.addFreeTurn();
 
            if(this.currentPlayer.getFreeTurn() != 0)
            {
-        	   openFreeTurnPrompt();
+        	   this.openFreeTurnPrompt("Do you want to use a free turn token?");
         	   
-        	   if(this.useFreeTurn)
-        	   {
-        		   System.out.println("worked");
-        	   }
            }
-           // print lose turn here or in spin wheel? Probably in spin wheel
+           else
+           {
+        	   this.openMessagePrompt("You've lost your turn!");
+        	   this.switchTurns();
+           }
+           this.roundCheck();	
            break;
 
         case FREE_TURN :
-        	
-        	this.currentPlayer.addFreeTurn();       	
-        	openMessagePrompt("You get a free turn token!");
-           break;
+        	    
+        	this.updateTokens(true);
+        	this.openMessagePrompt("You get a free turn token! Spin again!");
+        	this.roundCheck();	
+        	break;
 
         case BANKRUPT :
 
-        	openMessagePrompt("You've gone bankrupt!");
+        	this.openMessagePrompt("You've gone bankrupt!");
            if (this.currentPlayer.getScore() > 0)
            {
-              // bankrupt player by setting score to 0
-        	   this.currentPlayer.setScore(0);
-        	   
+        	   this.updateScore(0);      	   
            }
+           
+           this.switchTurns(); 
+           this.roundCheck();	
            break;
 
         case PLAYER_CHOICE :
         	
         	this.openCategoryPrompt("Player's category choice!");
-        	
-        	/*
-           System.out.println("Player's choice");
-           ew.myEnum = p.chooseCategory();
-           q = this.board.askQuestion(ew.myEnum);
-           */
-
-           
-        	/*
-           if(q == null) {
-              System.out.println("Category had no questions left, skipping turn.");
-           }
-           else {
-
-              System.out.println(q.getQuestion() + "\n\n");
-              System.out.println("Enter the number of the answer you would like to select:");
-              System.out.println("\t 1.) " + q.getCorrectAnswer());
-              System.out.println("\t 2.) " + q.getWrongAnswer1());
-              System.out.println("\t 3.) " + q.getWrongAnswer2());
-
-              int decision = 0;
-              }*/
+        	this.roundCheck();	
            break;
 
         case OPPONENT_CHOICE :
 
         	this.openCategoryPrompt("Oppenent's category choice!");
-           
+        	this.roundCheck();	
            break;
 
         case SPIN_AGAIN :
            
-        	openMessagePrompt("Spin Again!");
+        	this.openMessagePrompt("Spin Again!");
+        	this.roundCheck();	
            break;
 
            // all remaining sectors
         default :
 
         	this.currentCategory = this.game.board.categories.get(this.currentSector.ordinal());
-        	this.openQuestionPrompt();
         	
-        	/*
-           // sector will be the category name
-           q = this.board.askQuestion(ew.myEnum);
-			
-           
+        	if(this.currentCategory.questionsLeft())
+        	{
+        		this.openQuestionPrompt();
+        	}
+        	else
+        	{
+        		this.openMessagePrompt("No questions remaining in " + this.currentCategory.getCategoryName() + ". Spin again!");
+        	}
+        		
+        	this.roundCheck();	
 
-           if(q == null) {
-              System.out.println("Category had no questions left, skipping turn.");
-           }
-           else {
-
-              System.out.println(q.getQuestion() + "\n\n");
-              System.out.println("Enter the number of the answer you would like to select:");
-              System.out.println("\t 1.) " + q.getCorrectAnswer());
-              System.out.println("\t 2.) " + q.getWrongAnswer1());
-              System.out.println("\t 3.) " + q.getWrongAnswer2());
-
-              p.setScore(p.getScore() + i.i * q.points);
-           }*/
         }
     	
     	
@@ -357,7 +434,7 @@ public class GUI extends Application {
         grid.add(this.roundTxt, 79, 4, 50, 1);
         grid.add(this.turnTxt, 76, 5, 50, 1);
         
-        Button startGameBtn = new Button("Start Game");
+        startGameBtn = new Button("Start Game");
         startGameBtn.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(startGameBtn, 82, 2, 50, 1);
         
@@ -371,6 +448,61 @@ public class GUI extends Application {
             	openPlayerPrompt();  
             		
 
+            }
+        });
+        
+        this.roundBtn = new Button("Go To Round 2");
+        this.roundBtn.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        this.roundBtn.setDisable(true);        
+        grid.add(this.roundBtn, 80, 7, 50, 2);
+        
+        this.roundBtn.setOnAction(new EventHandler<ActionEvent>() {
+        	
+            @Override
+            public void handle(ActionEvent e) {
+            	
+            	roundTxt.setText("Round: 2");
+            	roundBtn.setDisable(true);
+            	spinWheelBtn.setDisable(false);
+            	game.wheel.resetCounter();
+            	spinsRemainTxt.setText("Spins Remaining: 50");
+            	game.setRound(false);
+            	resetBoard(false);         	
+            	         	
+            	openMessagePrompt("Round 1 has ended! This marks the start of round 2.");
+            	
+            	          	
+            		
+            }
+        });
+        
+        this.winnerBtn = new Button("Check Winner");
+        this.winnerBtn.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        this.winnerBtn.setDisable(true);        
+        grid.add(this.winnerBtn, 81, 9, 50, 2);
+        
+        this.winnerBtn.setOnAction(new EventHandler<ActionEvent>() {
+        	
+            @Override
+            public void handle(ActionEvent e) {
+
+            	winnerBtn.setDisable(true);
+            	
+            	if(game.player1.getScore() > game.player2.getScore())
+            	{
+            		openMessagePrompt(game.player1.getName() + " wins!");
+            	}
+            	else if(game.player1.getScore() < game.player2.getScore())
+            	{
+            		openMessagePrompt(game.player2.getName() + " wins!");
+            	}
+            	else
+            	{
+            		openMessagePrompt("It's a tie, nobody wins!");
+            	}
+            	
+            	startGameBtn.setDisable(false);
+      		
             }
         });
     }
@@ -403,9 +535,36 @@ public class GUI extends Application {
             public void handle(ActionEvent e) {                        	
             	           	
             	// obtain sector from game object
-            	currentSector = game.wheel.spinWheel();
-            	currentSector = Sector.OPPONENT_CHOICE;
-            	//currentPlayer = game.getCurrentPlayer();
+            	currentSector = game.wheel.spinWheel();            	          	
+            	
+            	/*
+            	if(temp==0)
+            	{
+            		game.wheel.setSpinsRemaining(0);
+            		currentSector = Sector.CATEGORY2;
+            		temp++;
+            	}
+            	else if(temp==1)
+            	{
+            		currentSector = Sector.CATEGORY2;
+            		temp++;
+            	}
+            	else if(temp==2)
+            	{
+            		game.wheel.setSpinsRemaining(0);
+            		currentSector = Sector.CATEGORY2;
+            		temp++;
+            	}
+            	else if(temp==3)
+            	{
+            		currentSector = Sector.CATEGORY2;
+            		temp++;
+            	}
+            	else if(temp==4)
+            	{
+            		currentSector = Sector.CATEGORY2;
+            		temp++;
+            	}*/
             	
             	spinWheel(currentSector);  	
 
@@ -439,6 +598,22 @@ public class GUI extends Application {
     		grid.add(currentBox, gridCol+i, gridRow);
     	}
     	
+    	this.gameCategories = new Text[6];
+    	
+    	for(int i=0; i<gameCategories.length; i++)
+    	{   
+
+    		this.gameCategories[i] = new Text(" Category " + (i + 1) + " ");
+    		this.gameCategories[i].setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+
+    		HBox gameCatBox = new HBox(this.gameCategories[i]);
+    		gameCatBox.setAlignment(Pos.CENTER);
+    		gameCatBox.setPrefHeight(50);
+    		gameCatBox.setStyle("-fx-background-color: yellow;");
+
+    		grid.add(gameCatBox, gridCol+i, gridRow+1);
+    	}
+    	
     	this.qPoints = new TextField[5][6];
     	
     	
@@ -453,7 +628,7 @@ public class GUI extends Application {
     			this.qPoints[row][col].setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
     			this.qPoints[row][col].setAlignment(Pos.CENTER);
     			this.qPoints[row][col].setEditable(false);
-    			grid.add(this.qPoints[row][col], gridCol + col%6, gridRow + 1 + row%5);
+    			grid.add(this.qPoints[row][col], gridCol + col%6, gridRow + 2 + row%5);
     			 			
     		}
     	}
@@ -523,7 +698,15 @@ public class GUI extends Application {
             // set player 1 and player 2 names in the Game
             try {
 				game = new Game(player1TextField.getText(), player2TextField.getText());
-				setTurn(true);
+				currentPlayer = game.player2;
+				player1ScoreTxt.setText("Score: 0");
+				player2ScoreTxt.setText("Score: 0");
+				player1TokensTxt.setText("Tokens: 0");
+				player2TokensTxt.setText("Tokens: 0");
+				roundTxt.setText("Round: 1");
+				game.setRound(true);
+				resetBoard(true);			
+				switchTurns();
 				
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
@@ -544,7 +727,7 @@ public class GUI extends Application {
 
     }
     
-    private void openFreeTurnPrompt()
+    private void openFreeTurnPrompt(String message)
     {
         GridPane freeTurnPromptGrid = new GridPane();
         
@@ -563,7 +746,7 @@ public class GUI extends Application {
         Stage freeTurnPromptStage = new Stage();
         freeTurnPromptStage.setTitle("Use Free Turn Token");
         
-        Text freeTurnTitle = new Text("Do you want to use a free turn token?");
+        Text freeTurnTitle = new Text(message);
         freeTurnTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         
         freeTurnPromptGrid.add(freeTurnTitle, 0, 0, 3, 1);
@@ -582,9 +765,9 @@ public class GUI extends Application {
             @Override
             public void handle(ActionEvent e) {
 
-            	useFreeTurn = true;
-            	
+            	updateTokens(false);            	
             	freeTurnPromptStage.close();
+            	openMessagePrompt("Spin again!");
             			
             }
         });
@@ -593,10 +776,11 @@ public class GUI extends Application {
        	 
             @Override
             public void handle(ActionEvent e) {
-
-            	useFreeTurn = false;
             	
             	freeTurnPromptStage.close();
+         	   	openMessagePrompt("Your turn is over!");
+         	   	switchTurns();
+            	
             			
             }
         });
@@ -647,9 +831,10 @@ public class GUI extends Application {
         });
         
         
-        Scene freeTurnScene = new Scene(messageGrid);            
-        messageStage.setScene(freeTurnScene);
-        
+        Scene messageScene = new Scene(messageGrid);            
+        messageStage.setScene(messageScene);
+        //messageStage.setX(100);
+        //messageStage.setY(100);
         messageStage.show();
     }
     
@@ -694,11 +879,8 @@ public class GUI extends Application {
         	 
             @Override
             public void handle(ActionEvent e) {
-
-            	currentCategory = game.board.categories.get(0);
             	
-            	openQuestionPrompt();
-            	
+            	handleCatSelect(0);        	
             	categoryPromptStage.close();
             			
             }
@@ -708,11 +890,8 @@ public class GUI extends Application {
        	 
             @Override
             public void handle(ActionEvent e) {
-
-            	currentCategory = game.board.categories.get(1);
             	
-            	openQuestionPrompt();
-            	
+            	handleCatSelect(1);            	
             	categoryPromptStage.close();
             			
             }
@@ -722,11 +901,8 @@ public class GUI extends Application {
           	 
             @Override
             public void handle(ActionEvent e) {
-
-            	currentCategory = game.board.categories.get(2);
             	
-            	openQuestionPrompt();
-            	
+            	handleCatSelect(2);
             	categoryPromptStage.close();
             			
             }
@@ -736,11 +912,8 @@ public class GUI extends Application {
           	 
             @Override
             public void handle(ActionEvent e) {
-
-            	currentCategory = game.board.categories.get(3);
             	
-            	openQuestionPrompt();
-            	
+            	handleCatSelect(3);
             	categoryPromptStage.close();
             			
             }
@@ -750,11 +923,8 @@ public class GUI extends Application {
           	 
             @Override
             public void handle(ActionEvent e) {
-
-            	currentCategory = game.board.categories.get(4);
             	
-            	openQuestionPrompt();
-            	
+            	handleCatSelect(4);
             	categoryPromptStage.close();
             			
             }
@@ -764,11 +934,8 @@ public class GUI extends Application {
          	 
             @Override
             public void handle(ActionEvent e) {
-
-            	currentCategory = game.board.categories.get(5);
             	
-            	openQuestionPrompt();
-            	
+            	handleCatSelect(5);
             	categoryPromptStage.close();
             			
             }
@@ -877,6 +1044,9 @@ public class GUI extends Application {
     private Game game;
     
     private Button spinWheelBtn;
+    private Button roundBtn;
+    private Button winnerBtn;
+    private Button startGameBtn;
     private ImageView wheelImageView;
     
     private Text spinsRemainTxt; 
@@ -892,8 +1062,10 @@ public class GUI extends Application {
     
     private TextField[][] qPoints;
     private Text[] category;
+    private Text[] gameCategories;
     
     private String picBasePath;
     
-    private boolean useFreeTurn;
+    
+    private int temp;
 }

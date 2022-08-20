@@ -1,0 +1,258 @@
+{
+    "questions": {
+        "categories": [
+            {
+                "category": 1,
+                "name": "Music",
+                "questions":
+                [
+                    {
+                        "points": 200,
+                        "Question": "Who was a member of One Direction?",
+                        "correctAnswer": "Nial Horan",
+                        "wrongAnswer1": "Justin Bieber",
+                        "wrongAnswer2": "Shawn Mendes"
+                    },
+                    {
+                        "points": 400,
+                        "Question": "Who has won the most Grammys in history?",
+                        "correctAnswer": "George Solti",
+                        "wrongAnswer1": "Beyonce",
+                        "wrongAnswer2": "Stevie Wonder"
+                    },
+                    {
+                        "points": 600,
+                        "Question": "What is a type of precipitation?",
+                        "correctAnswer": "Rain",
+                        "wrongAnswer1": "Thunder",
+                        "wrongAnswer2": "Lightning"
+                    },
+                    {
+                        "points": 800,
+                        "Question": "What is the most streamed song on Spotify?",
+                        "correctAnswer": "Shape of You - Ed Sheeran",
+                        "wrongAnswer1": "Radioactive - Imagine Dragons",
+                        "wrongAnswer2": "One Dance - Drake"
+                    },
+                    {
+                        "points": 1000,
+                        "Question": "What was the best selling album of 2012?",
+                        "correctAnswer": "21 - Adele",
+                        "wrongAnswer1": "Recovery - Eminem",
+                        "wrongAnswer2": "Midnight Memories - One Direction"
+                    }
+                ]
+            },
+            {
+                "category": 2,
+                "name": "Fast Food",
+                "questions":
+                [
+                    {
+                        "points": 200,
+                        "Question": "What fast food chain is known for selling the 4 for $4?",
+                        "correctAnswer": "Wendy's",
+                        "wrongAnswer1": "Burger King",
+                        "wrongAnswer2": "Arbys"
+                    },
+                    {
+                        "points": 400,
+                        "Question": "What drink does McDonald's NOT sell?",
+                        "correctAnswer": "Diet Pepsi",
+                        "wrongAnswer1": "Dr. Pepper",
+                        "wrongAnswer2": "Sprite"
+                    },
+                    {
+                        "points": 600,
+                        "Question": "What fast food chain has the most locations in the USA?",
+                        "correctAnswer": "Subway",
+                        "wrongAnswer1": "McDonald's",
+                        "wrongAnswer2": "Taco Bell"
+                    },
+                    {
+                        "points": 800,
+                        "Question": "What was Panera Bread's original Name",
+                        "correctAnswer": "St. Louis Bread Company",
+                        "wrongAnswer1": "Brad's Bread and Bruch",
+                        "wrongAnswer2": "Bravo's Bakery"
+                    },
+                    {
+                        "points": 1000,
+                        "Question": "When did Burger King introduce The Whopper?",
+                        "correctAnswer": "1957",
+                        "wrongAnswer1": "1968",
+                        "wrongAnswer2": "1951"
+                    }
+                ]
+            },
+            {
+                "category": 3,
+                "name": "Sitcoms",
+                "questions":
+                [
+                    {
+                        "points": 200,
+                        "Question": "What sitcom did Mary Kate and Ashley Olson start in?",
+                        "correctAnswer": "Full House",
+                        "wrongAnswer1": "Family Matters",
+                        "wrongAnswer2": "Sister Sister"
+                    },
+                    {
+                        "points": 400,
+                        "Question": "What sitcom has the character of Leslie Knope?",
+                        "correctAnswer": "Parks and Recreation",
+                        "wrongAnswer1": "The Office",
+                        "wrongAnswer2": "Arrest Development"
+                    },
+                    {
+                        "points": 600,
+                        "Question": "What was the longest running sitcom of all time?",
+                        "correctAnswer": "It's Always Sunny in Philadelphia",
+                        "wrongAnswer1": "Friends",
+                        "wrongAnswer2": "Married ... With Children"
+                    },
+                    {
+                        "points": 800,
+                        "Question": "On Seinfeld, who was Jerry's neighbor?",
+                        "correctAnswer": "Kramer",
+                        "wrongAnswer1": "Elaine",
+                        "wrongAnswer2": "George"
+                    },
+                    {
+                        "points": 1000,
+                        "Question": "On Friends, how many times did Ross get married?",
+                        "correctAnswer": "3",
+                        "wrongAnswer1": "4",
+                        "wrongAnswer2": "0"
+                    }
+                ]
+            },
+            {
+                "category": 4,
+                "name": "Cartoons",
+                "questions":
+                [
+                    {
+                        "points": 200,
+                        "Question": "Which cartoon ran on Disney Channel?",
+                        "correctAnswer": "Phineas and Ferb",
+                        "wrongAnswer1": "CatDog",
+                        "wrongAnswer2": "Scooby-Doo"
+                    },
+                    {
+                        "points": 400,
+                        "Question": "Where does Spongebob work?",
+                        "correctAnswer": "Krusty Crab",
+                        "wrongAnswer1": "Chum Bucket",
+                        "wrongAnswer2": "Salty Spitoon"
+                    },
+                    {
+                        "points": 600,
+                        "Question": "What is a not a color of one of the Powerpuff Girls?",
+                        "correctAnswer": "Yellow",
+                        "wrongAnswer1": "Pink",
+                        "wrongAnswer2": "Green"
+                    },
+                    {
+                        "points": 800,
+                        "Question": "What fictional city does Hey Arnold! take place in?",
+                        "correctAnswer": "Hillwood",
+                        "wrongAnswer1": "Sky City",
+                        "wrongAnswer2": "Lakeview Park"
+                    },
+                    {
+                        "points": 1000,
+                        "Question": "In the Fairly Odd Parents, who is Timmy's babysitter?",
+                        "correctAnswer": "Vicky",
+                        "wrongAnswer1": "Trudy",
+                        "wrongAnswer2": "Mark"
+                    }
+                ]
+            },
+            {
+                "category": 5,
+                "name": "Cars,
+                "questions":
+                [
+                    {
+                        "points": 200,
+                        "Question": "Which vehicle is produced by Toyota?",
+                        "correctAnswer": "Avalon",
+                        "wrongAnswer1": "Accord",
+                        "wrongAnswer2": "Passat"
+                    },
+                    {
+                        "points": 400,
+                        "Question": "What car is no longer manufactored?",
+                        "correctAnswer": " Volkswagen Beetle ",
+                        "wrongAnswer1": "Ford Bronco",
+                        "wrongAnswer2": "Honda Civic"
+                    },
+                    {
+                        "points": 600,
+                        "Question": "What car brand stopped producing vehicles in 2009?",
+                        "correctAnswer": "Pontiac",
+                        "wrongAnswer1": "Saturn",
+                        "wrongAnswer2": "Plymouth"
+                    },
+                    {
+                        "points": 800,
+                        "Question": "What is the best selling sedan of all time?",
+                        "correctAnswer": "Corolla",
+                        "wrongAnswer1": "Camry",
+                        "wrongAnswer2": "Focus"
+                    },
+                    {
+                        "points": 1000,
+                        "Question": "What car did Rory Gilmore have in Gilmore Girls?",
+                        "correctAnswer": "Prius",
+                        "wrongAnswer1": "Cherokee",
+                        "wrongAnswer2": "XC60"
+                    }
+                ]
+            },
+            {
+                "category": 6,
+                "name": "Cities",
+                "questions":
+                [
+                    {
+                        "points": 200,
+                        "Question": "What is the largest city is the USA?",
+                        "correctAnswer": "New York City",
+                        "wrongAnswer1": "Los Angeles",
+                        "wrongAnswer2": "Chicago"
+                    },
+                    {
+                        "points": 400,
+                        "Question": "What is the largest city in Texas?",
+                        "correctAnswer": "Houston",
+                        "wrongAnswer1": "Dallas",
+                        "wrongAnswer2": "Austin"
+                    },
+                    {
+                        "points": 600,
+                        "Question": "What is the largest city in Wisconsin?",
+                        "correctAnswer": "Milwaukee",
+                        "wrongAnswer1": "Madison",
+                        "wrongAnswer2": "Green Bay"
+                    },
+                    {
+                        "points": 800,
+                        "Question": "What is the smallest city in the USA?",
+                        "correctAnswer": "River Forest, IN",
+                        "wrongAnswer1": "Buffalo, SD",
+                        "wrongAnswer2": "Apple, MN"
+                    },
+                    {
+                        "points": 1000,
+                        "Question": "What does the Sock Monkey originate in?",
+                        "correctAnswer": " Rockford, IL",
+                        "wrongAnswer1": "Denver, CO",
+                        "wrongAnswer2": " Aurora, IL"
+                    }
+                ]
+            }
+        ]
+    }
+}

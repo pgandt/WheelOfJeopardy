@@ -12,6 +12,8 @@ public class Category {
         this.name = (String) obj.get("name");
         this.categoryNum = Math.toIntExact((long) obj.get("category"));
         JSONArray qs = (JSONArray) obj.get("questions");
+        
+        //qs.size()
         for(int i = 0; i < qs.size(); i++) {
             this.questions.add(new Question((JSONObject) qs.get(i)));
         }

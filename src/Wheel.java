@@ -22,7 +22,15 @@ public class Wheel {
     
     public boolean spinsRemaining()
     {
-       return true;
+    	if(this.spinCounter > 0)
+    	{
+    		return true;
+    	}
+    	else
+    	{
+    		return false;
+    	}
+       
     }
 
     public Sector spinWheel() { //public Sector spinWheel(Player p)
@@ -38,17 +46,20 @@ public class Wheel {
 
         return this.sectors[rand_int1];
     }
+    
+    public void setSpinsRemaining(int spinsRemaining)
+    {
+    	this.spinCounter = spinsRemaining;
+    }
+    
+    public void resetCounter()
+    {
+    	this.spinCounter = 50;
+    }
 
     public int getSpinCounter() {
         return spinCounter;
     }
 
-    /*public static void main(String[] args) {
-        Wheel wheel1=new Wheel();
-        for (int i=0; i<18;i++) {
-            System.out.println(wheel1.spinWheel());
-        }
-        System.out.println(wheel1.getSpinCounter());
-    }*/
 
 }

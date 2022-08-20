@@ -27,13 +27,13 @@ public class Player {
     }
     //add FreeTurn
     public void addFreeTurn(){
-        System.out.println("Player added a free turn token.");
+        //System.out.println("Player added a free turn token.");
         this.freeTurns++;
     }
     
     //subtract FreeTurn
     public void subtractFreeTurn(){
-        System.out.println("Player used a free turn");
+        //System.out.println("Player used a free turn");
         this.freeTurns--;
     }
 

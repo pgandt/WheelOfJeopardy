@@ -11,12 +11,6 @@ import java.util.ArrayList;
 public class Board {
     //store the questions for each category in a linked list
 
-    public static void main(String args[]) throws IOException, ParseException {
-        Board b = new Board();
-        //int v = b.askQuestion(null);
-        //System.out.println("Gained " + v + "points.");
-    }
-
     public ArrayList<Category> categories;
 
     /**
@@ -26,18 +20,40 @@ public class Board {
      * @throws IOException
      * @throws ParseException
      */
-    public Board() throws IOException, ParseException
+    public Board(boolean round1) throws IOException, ParseException
     {
         categories = new ArrayList<Category>();
         JSONParser parser = new JSONParser();
-        Path jsonFile = Path.of("C:\\Users\\shaun\\Documents\\GitHub\\WheelOfJeopardy\\questions.json");//Path.of("questions.json");
+        Path jsonFile;
+        if(round1)
+        {
+        	jsonFile = Path.of("C:\\Users\\shaun\\Documents\\GitHub\\WheelOfJeopardy\\questions_round1.json");
+        }
+        else
+        {
+        	jsonFile = Path.of("C:\\Users\\shaun\\Documents\\GitHub\\WheelOfJeopardy\\questions_round2.json");
+        }        	
+        //Path.of("questions.json");
         String jsonString = Files.readString(jsonFile);
         JSONObject jsonData = (JSONObject) parser.parse(jsonString);
-        JSONObject r1 = (JSONObject) jsonData.get("round1Questions");
+        JSONObject r1 = (JSONObject) jsonData.get("questions");
         JSONArray categories = (JSONArray) r1.get("categories");
+        
         for(int i = 0; i < categories.size(); i++) {
             this.categories.add(new Category((JSONObject) categories.get(i)));
         }
+    }
+    public boolean questionsLeft()
+    {
+    	for(int i=0; i<6; i++)
+    	{
+    		if(categories.get(i).questionsLeft())
+    		{
+    			return true;
+    		}
+    	}
+    	
+    	return false;
     }
 
 

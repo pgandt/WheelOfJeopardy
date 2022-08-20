@@ -35,7 +35,6 @@ public class Game {
    {
 
       this.wheel = new Wheel();
-      this.board = new Board();
       this.player1 = new Player(player1Name);
       this.player2 = new Player(player2Name);
       
@@ -221,6 +220,18 @@ public class Game {
    }
 
    // round change
+   public void setRound(boolean round1)
+   {
+	   try {
+		this.board = new Board(round1);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (ParseException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+   }
 
    public class enumWrapper {
       public Sector myEnum;
