@@ -66,7 +66,7 @@ public class GUI extends Application {
         
         GridPane grid = new GridPane();
         
-        grid.setGridLinesVisible(true);
+        grid.setGridLinesVisible(false);
         
         // default position of the grid from the top left of the scene to the center
         grid.setAlignment(Pos.TOP_LEFT);
@@ -90,8 +90,60 @@ public class GUI extends Application {
               
         primaryStage.show(); 
         
-        this.setTurn(true);
 
+    }
+    
+    private void handleAnswer(boolean correct)
+    {
+    	if(correct)
+    	{
+    		colorBoard(this.currentSector.ordinal(),4-this.currentCategory.numQuestionsLeft(), true);  
+    		
+    		this.currentPlayer.setScore(this.currentPlayer.getScore() + this.currentQuestion.points);
+    		openMessagePrompt("Correct, spin again!");
+    		if(this.currentPlayer.getName() == this.game.player1.getName())
+    		{
+    			this.player1ScoreTxt.setText("Score: " + this.currentPlayer.getScore());
+    		}
+    		else
+    		{
+    			this.player2ScoreTxt.setText("Score: " + this.currentPlayer.getScore());
+    		}
+    	}
+    	else
+    	{
+    		colorBoard(this.currentSector.ordinal(),4-this.currentCategory.numQuestionsLeft(), false);
+    		
+    		this.currentPlayer.setScore(this.currentPlayer.getScore() - this.currentQuestion.points);
+    		if(this.currentPlayer.getName() == this.game.player1.getName())
+    		{
+    			this.player1ScoreTxt.setText("Score: " + this.currentPlayer.getScore());
+    			this.setTurn(false);
+    		}
+    		else
+    		{
+    			this.player2ScoreTxt.setText("Score: " + this.currentPlayer.getScore());
+    			this.setTurn(true);
+    		}
+    		
+    		openMessagePrompt("Incorrect, turn over!");
+    	}
+    	
+
+    }
+    
+    private void colorBoard(int colIndex, int rowIndex, boolean correct)
+    {
+    	if(correct)
+    	{
+    		this.qPoints[rowIndex][colIndex].setStyle("-fx-background-color: lightgreen;");
+    	}
+    	else
+    	{
+    		this.qPoints[rowIndex][colIndex].setStyle("-fx-background-color: red;");
+    	}
+    	
+    	
     }
     
     private void setTurn(boolean player1)
@@ -107,6 +159,7 @@ public class GUI extends Application {
     		this.player2TokensTxt.setFill(Color.BLACK);
     		
     		this.turnTxt.setText("Turn: Player 1");
+    		this.currentPlayer = this.game.player1;
     	}
     	else
     	{
@@ -119,6 +172,7 @@ public class GUI extends Application {
     		this.player1TokensTxt.setFill(Color.BLACK);
     		
     		this.turnTxt.setText("Turn: Player 2");
+    		this.currentPlayer = this.game.player2;
     	}
     	
     	
@@ -149,7 +203,7 @@ public class GUI extends Application {
     	int endingAngle = angleMap.get(sector);
     	RotateTransition rotate = new RotateTransition();  
     	
-    	rotate.setDuration(Duration.millis(8000)); 
+    	rotate.setDuration(Duration.millis(3000)); 
     	rotate.setFromAngle(0);
     	rotate.setToAngle(spinWheelOffset + endingAngle);
     	
@@ -160,24 +214,15 @@ public class GUI extends Application {
     	rotate.play();
     	
     	// reference game object in future
-    	this.spinsRemainTxt.setText("Spins Remaining: " + 49);
+    	this.spinsRemainTxt.setText("Spins Remaining: " + this.game.wheel.getSpinCounter());
     	
 
     }
     
     private void handleWheelResult()
-    {
-    	qPoints[0][0].setStyle("-fx-background-color: lightgreen;");
-        qPoints[1][0].setStyle("-fx-background-color: lightgreen;");
-        qPoints[2][0].setStyle("-fx-background-color: red;");
-        
-        qPoints[0][4].setStyle("-fx-background-color: lightgreen;");
-        qPoints[1][4].setStyle("-fx-background-color: red;");
-        qPoints[2][4].setStyle("-fx-background-color: lightgreen;");
-        qPoints[3][4].setStyle("-fx-background-color: red;");
-    	
+    {   	
     	// if the sector is lose turn, then prompt if user wants to use free turn token if they have any
-    	switch (currentSector)
+    	switch (this.currentSector)
         {
         case LOSE_TURN :
         	
@@ -253,7 +298,9 @@ public class GUI extends Application {
            // all remaining sectors
         default :
 
+        	this.currentCategory = this.game.board.categories.get(this.currentSector.ordinal());
         	this.openQuestionPrompt();
+        	
         	/*
            // sector will be the category name
            q = this.board.askQuestion(ew.myEnum);
@@ -343,7 +390,7 @@ public class GUI extends Application {
         arrowImageView.setFitWidth(50);
         arrowImageView.setFitHeight(50);
         arrowImageView.setImage(arrowImage);
-        grid.add(arrowImageView, 51 + gridCol, 10 + gridRow, 5,5);
+        grid.add(arrowImageView, 51 + gridCol, 9 + gridRow, 5,5);
         
         this.spinWheelBtn = new Button("Spin Wheel");
         this.spinWheelBtn.setDisable(true);
@@ -356,9 +403,9 @@ public class GUI extends Application {
             public void handle(ActionEvent e) {                        	
             	           	
             	// obtain sector from game object
-            	//currentSector = game.wheel.spinWheel();
-            	currentSector = Sector.CATEGORY2;
-            	currentPlayer = game.getCurrentPlayer();
+            	currentSector = game.wheel.spinWheel();
+            	currentSector = Sector.OPPONENT_CHOICE;
+            	//currentPlayer = game.getCurrentPlayer();
             	
             	spinWheel(currentSector);  	
 
@@ -381,7 +428,7 @@ public class GUI extends Application {
     	for(int i=0; i<category.length; i++)
     	{   
 
-    		this.category[i] = new Text(" Category " + i + " ");
+    		this.category[i] = new Text(" Category " + (i + 1) + " ");
     		this.category[i].setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 
     		HBox currentBox = new HBox(this.category[i]);
@@ -389,8 +436,6 @@ public class GUI extends Application {
     		currentBox.setPrefHeight(50);
     		currentBox.setStyle("-fx-background-color: pink;");
 
-    		
-    		
     		grid.add(currentBox, gridCol+i, gridRow);
     	}
     	
@@ -402,7 +447,7 @@ public class GUI extends Application {
     	{
     		for(int col=0; col < this.qPoints[row].length; col++)
     		{
-    			this.qPoints[row][col] = new TextField(Integer.toString((row+1)*200));
+    			this.qPoints[row][col] = new TextField(Integer.toString((row+1)*100));
     			this.qPoints[row][col].setPrefWidth(1000);
     			this.qPoints[row][col].setStyle("-fx-background-color: lightblue;");
     			this.qPoints[row][col].setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
@@ -430,7 +475,7 @@ public class GUI extends Application {
         // space around the edge of the grid pane (top, right, bottom, left)
         playerGrid.setPadding(new Insets(25, 25, 25, 25));
     	
-        playerGrid.setGridLinesVisible(true);
+        playerGrid.setGridLinesVisible(false);
     	
         Stage playerStage = new Stage();
         playerStage.setTitle("Player Names");
@@ -478,6 +523,7 @@ public class GUI extends Application {
             // set player 1 and player 2 names in the Game
             try {
 				game = new Game(player1TextField.getText(), player2TextField.getText());
+				setTurn(true);
 				
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
@@ -512,7 +558,7 @@ public class GUI extends Application {
         // space around the edge of the grid pane (top, right, bottom, left)
         freeTurnPromptGrid.setPadding(new Insets(25, 25, 25, 25));
     	
-        freeTurnPromptGrid.setGridLinesVisible(true);
+        freeTurnPromptGrid.setGridLinesVisible(false);
     	
         Stage freeTurnPromptStage = new Stage();
         freeTurnPromptStage.setTitle("Use Free Turn Token");
@@ -575,7 +621,7 @@ public class GUI extends Application {
         // space around the edge of the grid pane (top, right, bottom, left)
         messageGrid.setPadding(new Insets(25, 25, 25, 25));
     	
-        messageGrid.setGridLinesVisible(true);
+        messageGrid.setGridLinesVisible(false);
     	
         Stage messageStage = new Stage();
         messageStage.setTitle("Notification");
@@ -621,7 +667,7 @@ public class GUI extends Application {
         // space around the edge of the grid pane (top, right, bottom, left)
         categoryPromptGrid.setPadding(new Insets(25, 25, 25, 25));
     	
-        categoryPromptGrid.setGridLinesVisible(true);
+        categoryPromptGrid.setGridLinesVisible(false);
     	
         Stage categoryPromptStage = new Stage();
         categoryPromptStage.setTitle("Category Prompt");
@@ -651,6 +697,8 @@ public class GUI extends Application {
 
             	currentCategory = game.board.categories.get(0);
             	
+            	openQuestionPrompt();
+            	
             	categoryPromptStage.close();
             			
             }
@@ -662,6 +710,8 @@ public class GUI extends Application {
             public void handle(ActionEvent e) {
 
             	currentCategory = game.board.categories.get(1);
+            	
+            	openQuestionPrompt();
             	
             	categoryPromptStage.close();
             			
@@ -675,6 +725,8 @@ public class GUI extends Application {
 
             	currentCategory = game.board.categories.get(2);
             	
+            	openQuestionPrompt();
+            	
             	categoryPromptStage.close();
             			
             }
@@ -686,6 +738,8 @@ public class GUI extends Application {
             public void handle(ActionEvent e) {
 
             	currentCategory = game.board.categories.get(3);
+            	
+            	openQuestionPrompt();
             	
             	categoryPromptStage.close();
             			
@@ -699,6 +753,8 @@ public class GUI extends Application {
 
             	currentCategory = game.board.categories.get(4);
             	
+            	openQuestionPrompt();
+            	
             	categoryPromptStage.close();
             			
             }
@@ -710,6 +766,8 @@ public class GUI extends Application {
             public void handle(ActionEvent e) {
 
             	currentCategory = game.board.categories.get(5);
+            	
+            	openQuestionPrompt();
             	
             	categoryPromptStage.close();
             			
@@ -736,7 +794,7 @@ public class GUI extends Application {
         // space around the edge of the grid pane (top, right, bottom, left)
         questionGrid.setPadding(new Insets(25, 25, 25, 25));
     	
-        questionGrid.setGridLinesVisible(true);
+        questionGrid.setGridLinesVisible(false);
     	
         Stage questionStage = new Stage();
         questionStage.setTitle("Answer Question");
@@ -775,12 +833,8 @@ public class GUI extends Application {
         	 
             @Override
             public void handle(ActionEvent e) {
-            	
-            	if(aBtn.getText() == currentQuestion.getCorrectAnswer())
-            	{
-            		System.out.println("Correct!");
-            	}
-            	
+            	         	
+            	handleAnswer(aBtn.getText() == currentQuestion.getCorrectAnswer());          	
             	questionStage.close();
             			
             }
@@ -791,10 +845,7 @@ public class GUI extends Application {
             @Override
             public void handle(ActionEvent e) {
 
-            	if(bBtn.getText() == currentQuestion.getCorrectAnswer())
-            	{
-            		System.out.println("Correct!");
-            	}
+            	handleAnswer(bBtn.getText() == currentQuestion.getCorrectAnswer());
             	questionStage.close();
             			
             }
@@ -805,11 +856,7 @@ public class GUI extends Application {
             @Override
             public void handle(ActionEvent e) {
 
-            	if(cBtn.getText() == currentQuestion.getCorrectAnswer())
-            	{
-            		System.out.println("Correct!");
-            	}
-            	
+            	handleAnswer(cBtn.getText() == currentQuestion.getCorrectAnswer());
             	questionStage.close();
             			
             }

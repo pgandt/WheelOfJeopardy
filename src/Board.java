@@ -43,7 +43,7 @@ public class Board {
 
     public Question askQuestion(Sector category) {
         Category c = null;
-        System.out.println("Board is asking a question.");
+        //System.out.println("Board is asking a question.");
 
         switch (category) {
 
@@ -81,10 +81,10 @@ public class Board {
         
         if(!c.questionsLeft())
         {
-            System.out.println("No questions left in category \"" + c.getCategoryName() + "\".");
+            //System.out.println("No questions left in category \"" + c.getCategoryName() + "\".");
             return null;
         }
-        System.out.println("Your category is: " + c.getCategoryName());
+        //System.out.println("Your category is: " + c.getCategoryName());
         Question q = c.questions.pollFirst();
 
         return q;

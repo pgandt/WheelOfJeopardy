@@ -20,6 +20,11 @@ public class Category {
     public boolean questionsLeft() {
         return questions.size() != 0;
     }
+    
+    public int numQuestionsLeft()
+    {
+    	return questions.size();
+    }
 
     public String getCategoryName() {
         return this.name;

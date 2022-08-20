@@ -97,7 +97,7 @@ public class Player {
     
     //set Score
     public void setScore(int newScore){
-        System.out.println("Player's score is now" + newScore);
+        //System.out.println("Player's score is now" + newScore);
         this.score = newScore;
     }
     //get Score
