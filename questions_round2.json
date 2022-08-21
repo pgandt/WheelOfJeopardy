@@ -22,10 +22,10 @@
                     },
                     {
                         "points": 600,
-                        "Question": "What is a type of precipitation?",
-                        "correctAnswer": "Rain",
-                        "wrongAnswer1": "Thunder",
-                        "wrongAnswer2": "Lightning"
+                        "Question": "Who is the highest grossing musician of all time?",
+                        "correctAnswer": "The Beatles",
+                        "wrongAnswer1": "Elvis Presley",
+                        "wrongAnswer2": "Michael Jackson"
                     },
                     {
                         "points": 800,
@@ -71,7 +71,7 @@
                     },
                     {
                         "points": 800,
-                        "Question": "What was Panera Bread's original Name",
+                        "Question": "What was Panera Bread's original Name?",
                         "correctAnswer": "St. Louis Bread Company",
                         "wrongAnswer1": "Brad's Bread and Bruch",
                         "wrongAnswer2": "Bravo's Bakery"
@@ -171,7 +171,7 @@
             },
             {
                 "category": 5,
-                "name": "Cars,
+                "name": "Cars",
                 "questions":
                 [
                     {
@@ -184,7 +184,7 @@
                     {
                         "points": 400,
                         "Question": "What car is no longer manufactored?",
-                        "correctAnswer": " Volkswagen Beetle ",
+                        "correctAnswer": "Volkswagen Beetle ",
                         "wrongAnswer1": "Ford Bronco",
                         "wrongAnswer2": "Honda Civic"
                     },
@@ -246,8 +246,8 @@
                     },
                     {
                         "points": 1000,
-                        "Question": "What does the Sock Monkey originate in?",
-                        "correctAnswer": " Rockford, IL",
+                        "Question": "What city does the Sock Monkey originate in?",
+                        "correctAnswer": "Rockford, IL",
                         "wrongAnswer1": "Denver, CO",
                         "wrongAnswer2": " Aurora, IL"
                     }

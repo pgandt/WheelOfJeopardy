@@ -30,6 +30,9 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -84,7 +87,9 @@ public class GUI extends Application {
         this.addQuestionTable(grid, 110, 8);
         
         this.addWheel(grid, 15, 2);
-                  
+        
+        grid.setStyle("-fx-background-color: radial-gradient(focus-angle 90deg, focus-distance 50%, center 50% 50%, radius 60%, reflect, white, white 80%, lightskyblue)");
+              
         Scene scene = new Scene(grid, 1920, 1000);
         
         primaryStage.setScene(scene);
