@@ -93,6 +93,8 @@ public class GUI extends Application {
         Scene scene = new Scene(grid, 1920, 1000);
         
         primaryStage.setScene(scene);
+        
+        primaryStage.getIcons().add(new Image(this.picBasePath + "Wheel.png"));
               
         primaryStage.show(); 
         
@@ -291,7 +293,7 @@ public class GUI extends Application {
     	int endingAngle = angleMap.get(sector);
     	RotateTransition rotate = new RotateTransition();  
     	
-    	rotate.setDuration(Duration.millis(1)); 
+    	rotate.setDuration(Duration.millis(3000)); 
     	rotate.setFromAngle(0);
     	rotate.setToAngle(spinWheelOffset + endingAngle);
     	
