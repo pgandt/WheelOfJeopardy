@@ -59,7 +59,7 @@ public class GUI extends Application {
     	this.spinsRemainTxt = new Text("Spins Remaining: 50");
     	this.roundTxt = new Text("Round: 1");
     	this.turnTxt = new Text("Turn: Player 1");
-    	this.picBasePath = "File:C:\\Users\\shaun\\Documents\\WoJ Workspace\\GUI Examples\\src\\Images\\";
+    	this.picBasePath = "C:\\Users\\shaun\\Documents\\GitHub\\WheelOfJeopardy\\src\\Images\\";
     }
     
     
