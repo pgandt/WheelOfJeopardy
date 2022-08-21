@@ -27,11 +27,11 @@ public class Board {
         Path jsonFile;
         if(round1)
         {
-        	jsonFile = Path.of("C:\\Users\\shaun\\Documents\\GitHub\\WheelOfJeopardy\\questions_round1.json");
+        	jsonFile = Path.of("questions_round1.json");
         }
         else
         {
-        	jsonFile = Path.of("C:\\Users\\shaun\\Documents\\GitHub\\WheelOfJeopardy\\questions_round2.json");
+        	jsonFile = Path.of("questions_round2.json");
         }        	
         //Path.of("questions.json");
         String jsonString = Files.readString(jsonFile);

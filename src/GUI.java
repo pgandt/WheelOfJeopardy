@@ -59,7 +59,7 @@ public class GUI extends Application {
     	this.spinsRemainTxt = new Text("Spins Remaining: 50");
     	this.roundTxt = new Text("Round: 1");
     	this.turnTxt = new Text("Turn: Player 1");
-    	this.picBasePath = "C:\\Users\\shaun\\Documents\\GitHub\\WheelOfJeopardy\\src\\Images\\";
+    	this.picBasePath = "file:src/Images/";
     }
     
     
@@ -516,7 +516,7 @@ public class GUI extends Application {
     
     private void addWheel(GridPane grid, int gridCol, int gridRow)
     {
-    	
+    	System.out.println(this.picBasePath + "Wheel.png");
         Image wheelImage = new Image(this.picBasePath + "Wheel.png");
         this.wheelImageView = new ImageView();
         this.wheelImageView.setFitWidth(500);
